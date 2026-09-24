@@ -38,6 +38,8 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      # The static edition (GitHub Pages) builds from the same code.
+      - run: pnpm build:static
 
   docker:
     runs-on: ubuntu-latest

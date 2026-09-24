@@ -4,7 +4,9 @@ import { LocaleSwitch } from "@/components/layout/LocaleSwitch";
 import { NavLink } from "@/components/layout/NavLink";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { TapeLink } from "@/components/tape/TapeLink";
+import { StaticFreshness } from "@/components/static/StaticPages";
 import { Link } from "@/i18n/navigation";
+import { STATIC_SITE } from "@/lib/links";
 
 export function Header() {
   const t = useTranslations("Layout");
@@ -22,7 +24,7 @@ export function Header() {
         </Link>
         <div className="flex flex-wrap items-center sm:gap-2">
           <NavLink href="/search">{t("search")}</NavLink>
-          <NavLink href="/account">{t("alerts")}</NavLink>
+          <NavLink href={STATIC_SITE ? "/alerts" : "/account"}>{t("alerts")}</NavLink>
           <TapeLink label={t.raw("tape")} />
           <LocaleSwitch />
           <ThemeToggle />
@@ -38,7 +40,7 @@ export function Footer() {
     <footer className="mt-auto border-t border-ink bg-paper">
       <div className="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-6 text-sm leading-relaxed sm:px-6">
         <p>{t("notOfficial")}</p>
-        <DataFreshness />
+        {STATIC_SITE ? <StaticFreshness /> : <DataFreshness />}
         <p>
           {t("sourcesLabel")}{" "}
           <a href="https://cerpp.eprocurement.gov.gr/khmdhs-opendata/help" className="underline">ΚΗΜΔΗΣ</a>
@@ -58,11 +60,16 @@ export function Footer() {
           ·{" "}
           <Link href="/privacy" className="underline">
             {t("privacy")}
-          </Link>{" "}
-          ·{" "}
-          <Link href="/developers" className="underline">
-            {t("developers")}
           </Link>
+          {!STATIC_SITE && (
+            <>
+              {" "}
+              ·{" "}
+              <Link href="/developers" className="underline">
+                {t("developers")}
+              </Link>
+            </>
+          )}
         </p>
       </div>
       <div className="h-1.5 bg-accent" aria-hidden="true" />

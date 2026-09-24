@@ -3,6 +3,7 @@ import { SignalBadges } from "@/components/items/SignalBadges";
 import { Stage } from "@/components/items/Stage";
 import { VoidStamp } from "@/components/items/VoidStamp";
 import { Link } from "@/i18n/navigation";
+import { recordHref, organisationHref } from "@/lib/links";
 import type { ItemSummary } from "@/lib/api/client";
 import { daysUntil, formatDate, formatDateTime, formatEuro } from "@/lib/format";
 
@@ -29,14 +30,14 @@ export function ItemCard({ item, index = 0 }: { item: ItemSummary; index?: numbe
         <div className="flex flex-col gap-0.5">
           {item.organisation && (
             <Link
-              href={`/organisations/${encodeURIComponent(item.organisation.id)}`}
+              href={organisationHref(item.organisation.id)}
               className="text-sm font-semibold no-underline hover:underline"
             >
               {item.organisation.name}
             </Link>
           )}
           <h2 className="text-base font-medium leading-snug sm:text-lg">
-            <Link href={`/items/${encodeURIComponent(item.sourceId)}`} className="no-underline hover:underline">
+            <Link href={recordHref(item.sourceId)} className="no-underline hover:underline">
               {item.title}
             </Link>
           </h2>

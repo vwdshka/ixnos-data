@@ -26,7 +26,10 @@
     "intro": "Search Greek public tenders, awards, contracts and payments from ΚΗΜΔΗΣ, in Greek, Greeklish, or by ΑΔΑΜ, ΑΔΑ or VAT number. Records are shown as published, in Greek.",
     "examples": "Try:",
     "latest": "Latest records",
-    "allLatest": "All records"
+    "allLatest": "All records",
+    "closing": "Deadlines closing soon",
+    "openCount": "{count, plural, one {# open tender} other {# open tenders}}",
+    "allOpen": "All open tenders"
   },
   "Search": {
     "label": "Search",
@@ -348,5 +351,18 @@
   },
   "Share": {
     "og": "Public procurement on ixnos-data"
+  },
+  "Static": {
+    "loading": "Loading…",
+    "failed": "The data didn't load. Check your connection and reload the page.",
+    "searchNote": "Search runs on your device: it finds words from the title and their forms, in Greek or Greeklish. Results are shown newest first."
+  },
+  "Alerts": {
+    "title": "Alerts by RSS",
+    "intro": "This edition of ixnos-data has no accounts: new records arrive by RSS. Add a feed to an RSS reader (e.g. Feedly, Inoreader, Thunderbird) or to a service that emails feeds to you. Each feed holds the 50 newest records and updates with the data.",
+    "all": "All new records",
+    "byTrade": "By trade (CPV)",
+    "byRegion": "By region",
+    "copy": "Copy the feed's address and add it to your reader."
   }
 }

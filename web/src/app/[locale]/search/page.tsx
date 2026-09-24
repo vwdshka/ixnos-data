@@ -3,38 +3,16 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { ItemCard } from "@/components/items/ItemCard";
 import { ActiveFilters } from "@/components/search/ActiveFilters";
+import { EmptyReceipt, Pager, SearchLoading } from "@/components/search/ResultsParts";
 import { SearchBox } from "@/components/search/SearchBox";
-import { Link } from "@/i18n/navigation";
 import { saveSearch } from "@/lib/account";
 import { ApiError, type SearchOutcome, searchItems } from "@/lib/api/client";
 import { formatEuro } from "@/lib/format";
-import { pageWindow, readSearchValues, searchQueryString, type SearchFormValues, toSearchParams } from "@/lib/search";
+import { readSearchValues, searchQueryString, type SearchFormValues, toSearchParams } from "@/lib/search";
 
 const PAGE_SIZE = 20;
 // Matches the limit in search.csv/route.ts.
 const CSV_LIMIT = 1000;
-
-const PAGER =
-  "rounded-sm border border-ink bg-paper px-3 py-2 no-underline transition-colors duration-150 hover:bg-ink hover:text-paper";
-
-// No results, printed as what it is: a receipt with nothing on it.
-function EmptyReceipt({ text, items, total, amount }: { text: string; items: string; total: string; amount: string }) {
-  return (
-    <div className="slip-shadow print-in mx-auto w-full max-w-sm">
-      <div role="status" className="slip flex flex-col gap-3 px-6 pt-5 font-mono text-sm">
-        <div className="leader">
-          <span>{items}</span>
-          <span>0</span>
-        </div>
-        <div className="total-rule leader pb-2 text-lg font-bold">
-          <span>{total}</span>
-          <span>{amount}</span>
-        </div>
-        <p className="font-sans text-base leading-relaxed">{text}</p>
-      </div>
-    </div>
-  );
-}
 
 function Notice({ children }: { children: React.ReactNode }) {
   return (
@@ -74,42 +52,10 @@ export default async function SearchPage({ params, searchParams }: PageProps<"/[
     <main id="main" className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">
       <SearchBox values={values} showFilters />
       {/* Keyed by the query, so every new search shows the placeholder while results load. */}
-      <Suspense key={JSON.stringify([values, page])} fallback={<ResultsLoading />}>
+      <Suspense key={JSON.stringify([values, page])} fallback={<SearchLoading />}>
         <Results values={values} page={page} locale={locale} />
       </Suspense>
     </main>
-  );
-}
-
-async function ResultsLoading() {
-  const t = await getTranslations("Search");
-  return (
-    <section aria-busy="true" className="flex flex-col gap-6">
-      <div role="status" className="flex flex-col gap-1 border-b-2 border-ink pb-3">
-        <p className="text-2xl font-bold">{t("loading")}</p>
-        <p className="late font-mono text-sm">{t("slowHint")}</p>
-      </div>
-      {/* The printer at work: a slip feeding out of the slot, the print head's cursor blinking. */}
-      <div className="flex flex-col" aria-hidden="true">
-        <div className="printer-slot" />
-        <div className="printer-paper overflow-hidden px-3">
-          <div className="slip-shadow printer-feed">
-            <div className="slip flex flex-col gap-2.5 px-5 pt-4 font-mono text-xs">
-              <p className="font-bold tracking-[0.2em]">
-                {t("printing")}
-                <span className="printer-cursor" />
-              </p>
-              <span className="printed-line w-40" />
-              <span className="printed-line w-3/4" />
-              <span className="printed-line w-1/2" />
-              <span className="tear mt-1 block pt-2">
-                <span className="printed-line ml-auto w-24" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -199,28 +145,7 @@ async function Results({ values, page, locale }: { values: SearchFormValues; pag
           ))}
         </ol>
       )}
-      {pages > 1 && (
-        <nav className="flex items-center justify-between gap-4 font-mono text-sm" aria-label={t("pagination")}>
-          {page > 1 ? <Link href={pageHref(page - 1)} className={PAGER}>{t("previous")}</Link> : <span />}
-          <span className="sm:hidden">{t("page", { page, pages })}</span>
-          <ol className="hidden items-center gap-1.5 sm:flex">
-            {pageWindow(page, pages).map((n, i) =>
-              n === null ? (
-                <li key={`gap-${i}`} aria-hidden="true" className="px-1">…</li>
-              ) : (
-                <li key={n}>
-                  {n === page ? (
-                    <span aria-current="page" className="inline-flex min-w-10 justify-center rounded-sm bg-ink px-3 py-2 text-paper">{n}</span>
-                  ) : (
-                    <Link href={pageHref(n)} aria-label={t("page", { page: n, pages })} className={`${PAGER} inline-flex min-w-10 justify-center`}>{n}</Link>
-                  )}
-                </li>
-              ),
-            )}
-          </ol>
-          {page < pages ? <Link href={pageHref(page + 1)} className={PAGER}>{t("next")}</Link> : <span />}
-        </nav>
-      )}
+      <Pager page={page} pages={pages} href={pageHref} />
     </section>
   );
 }

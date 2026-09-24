@@ -1,11 +1,30 @@
 "use client";
 
 import { useEffect, useId, useState, useSyncExternalStore } from "react";
+import { STATIC_SITE } from "@/lib/links";
+import { cpvLabels } from "@/lib/static/data";
 
 type Option = { code: string; label: string };
 type Found = { code: string; labelEl?: string | null; labelEn?: string | null };
 
 const noSubscription = () => () => {};
+
+// The static edition has no API: the same lookup over the published code list (codes by prefix,
+// labels by every word), best matches first, as many as the API returns.
+async function findCpv(query: string): Promise<Found[]> {
+  const labels = await cpvLabels();
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  const digits = query.replace(/\D/g, "");
+  return Object.entries(labels)
+    .filter(([code, [el, en]]) =>
+      digits.length >= 2 && digits.length === query.replace(/[\s-]/g, "").length
+        ? code.replace("-", "").startsWith(digits)
+        : words.every((word) => fold(el).includes(word) || fold(en).includes(word)),
+    )
+    .sort(([a], [b]) => a.length - b.length || a.localeCompare(b))
+    .slice(0, 20)
+    .map(([code, [labelEl, labelEn]]) => ({ code, labelEl, labelEn }));
+}
 
 // Case, accents and final sigma ignored, as the server does.
 const fold = (text: string) => text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replaceAll("ς", "σ");
@@ -53,8 +72,12 @@ export function CpvPicker({
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/cpv?q=${encodeURIComponent(query)}`, { signal: controller.signal });
-        const matches: Found[] = await response.json();
+        const matches: Found[] = STATIC_SITE
+          ? await findCpv(query)
+          : await (await fetch(`/api/cpv?q=${encodeURIComponent(query)}`, { signal: controller.signal })).json();
+        if (controller.signal.aborted) {
+          return;
+        }
         setFound({
           query,
           options: matches.map((m) => ({ code: m.code, label: (locale === "en" ? m.labelEn : m.labelEl) ?? m.labelEl ?? m.code })),

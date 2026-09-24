@@ -21,6 +21,10 @@ follow [Semantic Versioning](https://semver.org/) once published.
 
 ### Added
 
+- A static edition for GitHub Pages, refreshed every three hours by the Site workflow: the same
+  pages and design, with search, filters, records and authorities running in the browser from
+  data files, and RSS feeds per trade and region for alerts. The record, authority, status,
+  search and tape pages now share their components between the two editions.
 - `scripts/make-snapshot.sh --public`: a snapshot safe to publish, without contractors' VAT
   numbers (removed from the contractor table and from the raw source data, in a temporary copy
   of the database). It refuses to write the file if any remain.

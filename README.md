@@ -120,6 +120,36 @@ take the site down.
 - The API never returns contractor VAT numbers, and the bulk exports carry no contractor data
   at all ([ADR 0010](docs/adr/0010-api-keys-and-bulk-exports.md)).
 
+## The public site
+
+**https://vwdshka.github.io/ixnos-data/** is the static edition, hosted on GitHub Pages and
+refreshed every three hours by the [Site workflow](.github/workflows/site.yml). It has no server:
+
+- The workflow restores its working database, fetches new records with the same pipeline, and
+  writes the site's data as files (`pipeline/src/ixnos_data_pipeline/static_site.py`).
+- The web app is built as plain files (`pnpm build:static`); search, filters, record and
+  authority pages run in the browser from those files, with the same components as the full site.
+- Alerts are RSS feeds per trade and region instead of accounts; there's no API or CSV download.
+  Everything else (search in Greek and Greeklish, organisation spending, signals, the tape) works.
+
+Setting it up on a fork, once:
+
+1. **Settings → Pages → Source: GitHub Actions.**
+2. Make a long random key and save it as the repository secret `IXNOS_DATA_STATE_KEY`
+   (**Settings → Secrets and variables → Actions**). Keep a copy: without it the working
+   database can't be read, and a new one has to be made.
+3. From a local database with the data you want to start from, make the encrypted working copy
+   and attach it, named `site-state.dump.enc`, to a release tagged `site-state`:
+
+   ```bash
+   IXNOS_DATA_STATE_KEY='<the same key>' ./scripts/make-site-state.sh
+   ```
+
+4. **Actions → Site → Run workflow.** From then on it runs by itself.
+
+The working copy is encrypted because it keeps contractors' VAT numbers, which the pipeline
+needs to recognise the same contractor in new records but which are never published.
+
 ## Running it locally
 
 With only Docker installed, one command builds and starts the database, API and web app, and
