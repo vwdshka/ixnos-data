@@ -13,7 +13,7 @@ with IxnosDataClient("https://<api address>", api_key="ixn_...") as api:
     for item in result["items"]:
         print(item["deadlineAt"], item["organisation"]["name"], item["title"], item["amountEur"])
 
-    record = api.item(result["items"][0]["sourceId"])        # None if unknown
+    record = api.item(result["items"][0]["sourceId"])  # None if unknown
     authority = api.organisation(record["organisation"]["id"])
 
     # Every result, 100 per request, up to the API's limit of 10,000.
