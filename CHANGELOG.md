@@ -21,6 +21,9 @@ follow [Semantic Versioning](https://semver.org/) once published.
 
 ### Added
 
+- `scripts/make-snapshot.sh --public`: a snapshot safe to publish, without contractors' VAT
+  numbers (removed from the contractor table and from the raw source data, in a temporary copy
+  of the database). It refuses to write the file if any remain.
 - The receipt look, carried further: record slips open with the authority's name like a shop's
   receipt and close with a thank-you line, a QR code to the record and the receipt number;
   cancelled records carry a worn rubber stamp (ΑΚΥΡΟ / VOID); a replaced decision has its

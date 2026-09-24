@@ -129,7 +129,8 @@ fetches the latest records:
 ./scripts/start.sh                  # or ./scripts/start.sh <snapshot file or URL> for full history
 ```
 
-A snapshot is a database dump without accounts, made by `scripts/make-snapshot.sh`.
+A snapshot is a database dump without accounts, made by `scripts/make-snapshot.sh`; with
+`--public` it also leaves out contractors' VAT numbers, so it can be shared publicly.
 
 For development, install the toolchains as well: .NET SDK 10, Python 3.12 with
 [uv](https://docs.astral.sh/uv/), Node.js 24 with pnpm.
