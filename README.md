@@ -48,8 +48,6 @@ The interface is in Greek and English, in light and dark themes, and works witho
   the public API with keys and docs, and bulk exports.
 - **Tested:** the full production setup (HTTPS, cron jobs, digest, exports, backups and a
   restore) has run end to end on a development machine.
-- **Launch:** what remains is in [docs/launch.md](docs/launch.md). See
-  [CHANGELOG.md](CHANGELOG.md).
 
 ## How it works
 
