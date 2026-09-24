@@ -1,0 +1,71 @@
+code,parent_code,level,label_el,label_en
+EL,,0,Ελλάδα,Greece
+EL3,EL,1,Αττική,Attiki
+EL30,EL3,2,Αττική,Attiki
+EL301,EL30,3,Βόρειος Τομέας Αθηνών,Voreios Tomeas Athinon
+EL302,EL30,3,Δυτικός Τομέας Αθηνών,Dytikos Tomeas Athinon
+EL303,EL30,3,Κεντρικός Τομέας Αθηνών,Kentrikos Tomeas Athinon
+EL304,EL30,3,Νότιος Τομέας Αθηνών,Notios Tomeas Athinon
+EL305,EL30,3,Ανατολική Αττική,Anatoliki Attiki
+EL306,EL30,3,Δυτική Αττική,Dytiki Attiki
+EL307,EL30,3,"Πειραιάς, Νήσοι","Peiraias, Nisoi"
+EL4,EL,1,"Νησιά Αιγαίου, Κρήτη","Nisia Aigaiou, Kriti"
+EL41,EL4,2,Βόρειο Αιγαίο,Voreio Aigaio
+EL411,EL41,3,"Λέσβος, Λήμνος","Lesvos, Limnos"
+EL412,EL41,3,"Ικαρία, Σάμος","Ikaria, Samos"
+EL413,EL41,3,Χίος,Chios
+EL42,EL4,2,Νότιο Αιγαίο,Notio Aigaio
+EL421,EL42,3,"Κάλυμνος, Κάρπαθος – Ηρωική Νήσος Κάσος, Κως, Ρόδος","Kalymnos, Karpathos, Kasos, Kos, Rodos"
+EL422,EL42,3,"Άνδρος, Θήρα, Κέα - Κύθνος, Μήλος, Μύκονος, Νάξος, Πάρος, Σύρος, Τήνος","Andros, Thira, Kea - Kythnos, Milos, Mykonos, Naxos, Paros,  Syros, Tinos"
+EL43,EL4,2,Κρήτη,Kriti
+EL431,EL43,3,Ηράκλειο,Irakleio
+EL432,EL43,3,Λασίθι,Lasithi
+EL433,EL43,3,Ρέθυμνο,Rethymni
+EL434,EL43,3,Χανιά,Chania
+EL5,EL,1,Βόρεια Ελλάδα,Voreia Elláda
+EL51,EL5,2,"Ανατολική Μακεδονία, Θράκη","Anatoliki Makedonia, Thraki"
+EL511,EL51,3,Έβρος,Evros
+EL512,EL51,3,Ξάνθη,Xanthi
+EL513,EL51,3,Ροδόπη,Rodopi
+EL514,EL51,3,Δράμα,Drama
+EL515,EL51,3,"Θάσος, Καβάλα","Thasos, Kavala"
+EL52,EL5,2,Κεντρική Μακεδονία,Kentriki Makedonia
+EL521,EL52,3,Ημαθία,Imathia
+EL522,EL52,3,Θεσσαλονίκη,Thessaloniki
+EL523,EL52,3,Κιλκίς,Kilkis
+EL524,EL52,3,Πέλλα,Pella
+EL525,EL52,3,Πιερία,Pieria
+EL526,EL52,3,Σέρρες,Serres
+EL527,EL52,3,Χαλκιδική,Chalkidiki
+EL53,EL5,2,Δυτική Μακεδονία,Dytiki Makedonia
+EL531,EL53,3,"Γρεβενά, Κοζάνη","Grevena, Kozani"
+EL532,EL53,3,Καστοριά,Kastoria
+EL533,EL53,3,Φλώρινα,Florina
+EL54,EL5,2,Ήπειρος,Ipeiros
+EL541,EL54,3,"Άρτα, Πρέβεζα","Arta, Preveza"
+EL542,EL54,3,Θεσπρωτία,Thesprotia
+EL543,EL54,3,Ιωάννινα,Ioannina
+EL6,EL,1,Κεντρική Ελλάδα,Kentriki Elláda
+EL61,EL6,2,Θεσσαλία,Thessalia
+EL611,EL61,3,"Καρδίτσα, Τρίκαλα","Karditsa, Trikala"
+EL612,EL61,3,Λάρισα,Larisa
+EL613,EL61,3,"Μαγνησία, Σποράδες","Magnisia, Sporades"
+EL62,EL6,2,Ιόνια Νησιά,Ionia Nisia
+EL621,EL62,3,Ζάκυνθος,Zakynthos
+EL622,EL62,3,Κέρκυρα,Kerkyra
+EL623,EL62,3,"Ιθάκη, Κεφαλληνία","Ithaki, Kefallinia"
+EL624,EL62,3,Λευκάδα,Lefkada
+EL63,EL6,2,Δυτική Ελλάδα,Dytiki Elláda
+EL631,EL63,3,Αιτωλοακαρνανία,Aitoloakarnania
+EL632,EL63,3,Αχαΐα,Achaia
+EL633,EL63,3,Ηλεία,Ileia
+EL64,EL6,2,Στερεά Ελλάδα,Sterea Elláda
+EL641,EL64,3,Βοιωτία,Voiotia
+EL642,EL64,3,Εύβοια,Evvoia
+EL643,EL64,3,Ευρυτανία,Evrytania
+EL644,EL64,3,Φθιώτιδα,Fthiotida
+EL645,EL64,3,Φωκίδα,Fokida
+EL65,EL6,2,Πελοπόννησος,Peloponnisos
+EL651,EL65,3,"Αργολίδα, Αρκαδία","Argolida, Arkadia"
+EL652,EL65,3,Κορινθία,Korinthia
+EL653,EL65,3,"Λακωνία, Μεσσηνία","Lakonia, Messinia"

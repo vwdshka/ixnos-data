@@ -1,0 +1,73 @@
+name: Deploy
+
+# Builds the three images on every push to main and pushes them to GHCR. The deploy job runs
+# only once the server exists: set the repository variable DEPLOY_HOST and the secrets
+# DEPLOY_SSH_KEY and DEPLOY_KNOWN_HOSTS (see infra/README.md).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { name: api, context: backend, file: backend/src/IxnosData.Api/Dockerfile }
+          - { name: web, context: web, file: web/Dockerfile }
+          - { name: pipeline, context: pipeline, file: pipeline/Dockerfile }
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}-${{ matrix.name }}:${{ github.sha }}
+            ghcr.io/${{ github.repository }}-${{ matrix.name }}:latest
+
+  deploy:
+    needs: images
+    if: vars.DEPLOY_HOST != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          HOST: ${{ vars.DEPLOY_HOST }}
+          TAG: ${{ github.sha }}
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh "deploy@$HOST" "cd /opt/ixnos-data && git pull --ff-only \
+            && IXNOS_DATA_TAG=$TAG docker compose -f infra/compose.prod.yaml --env-file .env pull api web pipeline \
+            && IXNOS_DATA_TAG=$TAG docker compose -f infra/compose.prod.yaml --env-file .env up -d --remove-orphans"
+
+      # Search quality gate on real data (it can't run in CI: the dataset holds personal
+      # names). Fails the workflow when a category drops below its threshold. The query set is
+      # mounted from the checkout, where the package expects it (/contracts in the image).
+      - name: Score search quality
+        env:
+          HOST: ${{ vars.DEPLOY_HOST }}
+          TAG: ${{ github.sha }}
+        run: |
+          ssh "deploy@$HOST" "cd /opt/ixnos-data && IXNOS_DATA_TAG=$TAG docker compose -f infra/compose.prod.yaml --env-file .env \
+            run --rm -v /opt/ixnos-data/contracts:/contracts:ro --entrypoint python pipeline \
+            -m ixnos_data_pipeline.search_quality --api http://api:8080"

@@ -1,0 +1,45 @@
+name: Contracts check
+
+# Fails when a committed contract (OpenAPI, SQL schema, web API types) no longer matches
+# the code it is generated from. Fix: run scripts/generate-contracts.sh and commit.
+
+on:
+  push:
+    branches: [main]
+    paths: ["backend/**", "web/**", "contracts/**", "scripts/generate-contracts.sh", ".github/workflows/contracts-check.yml"]
+  pull_request:
+    paths: ["backend/**", "web/**", "contracts/**", "scripts/generate-contracts.sh", ".github/workflows/contracts-check.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          global-json-file: backend/global.json
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: web/package.json
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: web
+
+      - run: ./scripts/generate-contracts.sh
+
+      - name: Fail if contracts are stale
+        run: |
+          if ! git diff --exit-code -- contracts web/src/lib/api/schema.d.ts; then
+            echo "::error::Contracts are out of date. Run scripts/generate-contracts.sh and commit the result."
+            exit 1
+          fi

@@ -1,0 +1,117 @@
+{
+  "decisions": [
+    {
+      "protocolNumber": "1234",
+      "subject": "ΕΓΚΡΙΣΗ ΔΑΠΑΝΗΣ ΓΙΑ ΕΡΓΑΣΙΕΣ ΑΠΟΧΕΤΕΥΣΗΣ",
+      "issueDate": 1789430400000,
+      "organizationId": "6235",
+      "signerIds": [
+        "100002181"
+      ],
+      "unitIds": [
+        "81513"
+      ],
+      "decisionTypeId": "Β.2.1",
+      "thematicCategoryIds": [
+        "24"
+      ],
+      "extraFieldValues": {
+        "org": {
+          "afm": "090114939",
+          "afmType": "EL",
+          "enterName": false,
+          "name": "ΔΗΜΟΣ ΠΑΞΩΝ"
+        },
+        "sponsor": [
+          {
+            "sponsorAFMName": {},
+            "expenseAmount": {
+              "amount": 10000.0,
+              "currency": "EUR"
+            }
+          }
+        ],
+        "relatedAnalipsiYpoxreosis": [],
+        "relatedDecisions": [],
+        "documentType": "ΠΡΑΞΗ"
+      },
+      "privateData": false,
+      "ada": "99ΤΦΩΞΞ-ΣΜ1",
+      "publishTimestamp": 1789504255735,
+      "submissionTimestamp": 1789504255735,
+      "versionId": "7f8b18fd-8b87-4b3b-b0bf-ecfe832538b1",
+      "status": "PUBLISHED",
+      "url": "https://diavgeia.gov.gr/luminapi/api/decisions/99ΤΦΩΞΞ-ΣΜ1",
+      "documentUrl": "https://diavgeia.gov.gr/doc/99ΤΦΩΞΞ-ΣΜ1",
+      "documentChecksum": null,
+      "attachments": [],
+      "warnings": null,
+      "correctedVersionId": null
+    },
+    {
+      "protocolNumber": "1234",
+      "subject": "ΕΓΚΡΙΣΗ ΔΑΠΑΝΗΣ ΚΑΙ ΔΙΑΘΕΣΗ ΠΙΣΤΩΣΗΣ",
+      "issueDate": 1789430400000,
+      "organizationId": "100033457",
+      "signerIds": [
+        "100104322"
+      ],
+      "unitIds": [
+        "100034648"
+      ],
+      "decisionTypeId": "Β.2.1",
+      "thematicCategoryIds": [
+        "20"
+      ],
+      "extraFieldValues": {
+        "org": {
+          "afm": "997170000",
+          "afmType": "EL",
+          "enterName": false,
+          "name": "ΕΛΛΗΝΙΚΟ ΙΔΡΥΜΑ ΕΡΕΥΝΑΣ ΚΑΙ ΚΑΙΝΟΤΟΜΙΑΣ"
+        },
+        "sponsor": [
+          {
+            "sponsorAFMName": {
+              "afm": "999990001",
+              "name": "ΔΙΚΑΙΟΥΧΟΣ 1",
+              "enterName": false
+            },
+            "expenseAmount": {
+              "amount": 2700.0,
+              "currency": "EUR"
+            },
+            "kae": "6101"
+          }
+        ],
+        "relatedAnalipsiYpoxreosis": [
+          {
+            "textRelatedADA": "65ΥΕ46Μ77Γ-7Ε1"
+          }
+        ],
+        "relatedDecisions": [],
+        "documentType": "ΠΡΑΞΗ"
+      },
+      "privateData": true,
+      "ada": "ΕΤΡΛ46Μ77Γ-ΘΚΓ",
+      "publishTimestamp": 1789494870106,
+      "submissionTimestamp": 1789494870106,
+      "versionId": "a43f0a98-9de8-48fe-a10a-d3d76eec6ab9",
+      "status": "PUBLISHED",
+      "url": "https://diavgeia.gov.gr/luminapi/api/decisions/ΕΤΡΛ46Μ77Γ-ΘΚΓ",
+      "documentUrl": "https://diavgeia.gov.gr/doc/ΕΤΡΛ46Μ77Γ-ΘΚΓ",
+      "documentChecksum": null,
+      "attachments": [],
+      "warnings": null,
+      "correctedVersionId": null
+    }
+  ],
+  "info": {
+    "query": "submissionTimestamp:[DT(2026-09-15T00:00:00+03:00) TO DT(2026-09-16T00:00:00+03:00)] AND issueDate:[DT(2026-03-26T23:07:25+02:00) TO DT(2026-09-22T23:07:25+03:00)] AND decisionTypeUid:\"Β.2.1\" AND status:\"Αναρτημένη\"",
+    "page": 0,
+    "size": 500,
+    "actualSize": 2,
+    "total": 2,
+    "order": "recent"
+  }
+}

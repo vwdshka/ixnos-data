@@ -1,0 +1,30 @@
+name: Bug report
+description: Something in ixnos-data does not work as it should.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Search for ...
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: Page URL, API endpoint, or the part of the code.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Browser, screenshots, logs. Remove personal data first.

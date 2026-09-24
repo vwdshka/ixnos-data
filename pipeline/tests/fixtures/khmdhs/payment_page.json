@@ -1,0 +1,330 @@
+{
+  "totalElements": 2736,
+  "totalPages": 55,
+  "size": 50,
+  "number": 0,
+  "numberOfElements": 50,
+  "first": true,
+  "last": false,
+  "empty": false,
+  "content": [
+    {
+      "title": "ΕΝΤΟΛΗ ΠΛΗΡΩΜΗΣ 37721/2026",
+      "referenceNumber": "26PAY019787835",
+      "auctionReferenceNumber": null,
+      "signedDate": "2026-09-10T00:00:00",
+      "submissionDate": "2026-09-15T22:00:10.120893",
+      "lastUpdateDate": null,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "cancelled": false,
+      "credit": false,
+      "paymentRelatedAda": null,
+      "protocolNumber": null,
+      "authorEmail": null,
+      "aaht": "1020.E00677.0001",
+      "paymentCommitmentCode": "9Θ1Τ469Β7Κ-19Ζ",
+      "organizationVatNumber": "999562838",
+      "greekOrganizationVatNumber": null,
+      "commitmentNo": null,
+      "contractValue": null,
+      "organization": {
+        "key": "99206912",
+        "value": "ΠΑΝΕΠΙΣΤΗΜΙΟ ΔΥΤΙΚΗΣ ΜΑΚΕΔΟΝΙΑΣ"
+      },
+      "nutsCode": {
+        "key": "EL531",
+        "value": "Γρεβενά, Κοζάνη"
+      },
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": null,
+      "contractType": {
+        "key": "13",
+        "value": "Προμήθειες"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "1",
+        "value": "Κεντρική Κυβέρνηση"
+      },
+      "typeOfContractingAuthority": {
+        "key": "9",
+        "value": "ΝΠΔΔ"
+      },
+      "contractingData": {
+        "unitsOperator": {
+          "key": "100037531",
+          "value": "ΔΙΕΥΘΥΝΣΗ ΜΟΝΑΔΑΣ ΟΙΚΟΝΟΜΙΚΗΣ ΚΑΙ ΔΙΟΙΚΗΤΙΚΗΣ ΥΠΟΣΤΗΡΙΞΗΣ (ΜΟΔΥ) ΤΟΥ ΕΛΚΕ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Πρόεδρος Επιτροπής Ερευνών"
+        }
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": "81303",
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": null
+      },
+      "nutsCodes": [],
+      "totalCostWithVAT": 5084.0,
+      "totalCostWithoutVAT": 4100.0,
+      "objectDetails": [
+        {
+          "quantity": 1,
+          "type": {
+            "key": "C62",
+            "value": "Τεμάχιο"
+          },
+          "costWithoutVAT": 4100,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Προμήθεια Ηλεκτρονικού εξοπλισμού (Η/Υ, οθόνες, Βιντεοπροβολέα και λοιπών περιφερειακών ), αναγκαίων  για τη λειτουργική επάνδρωση και αξιοποίηση του χώρου του Πανεπιστημίου Δυτικής Μακεδονίας στο Municipal Inclusive Circu-Tech Hub (MICTH).",
+          "cpvs": [
+            {
+              "key": "38652120-7",
+              "value": "Βιντεοπροβολείς"
+            }
+          ],
+          "addressForDelivery": null,
+          "streetNumber": null,
+          "postalCode": null,
+          "city": "ΚΟΖΑΝΗ",
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "vatNo": "999990006",
+          "greekVatNo": true,
+          "name": "ΔΙΚΑΙΟΥΧΟΣ ΠΛΗΡΩΜΗΣ",
+          "country": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "invoiceNo": null,
+          "commitmentCode": null,
+          "budgetCode": null
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "requestRefNo": null,
+      "auctionRefNo": null,
+      "contractRefNo": "26SYMV019714072"
+    },
+    {
+      "title": "ΕΡΓΑΣΙΕΣ ΚΑΘΑΡΙΣΜΟΥ ΟΙΚΕΔΩΝ ΥΔΑΤΟΠΥΡΓΩΝ - ΥΔΑΤΟΔΕΞΑΜΕΝΩΝ(ΑΡ.ΣΥΜΒ.:1535/26)",
+      "referenceNumber": "26PAY019787803",
+      "auctionReferenceNumber": null,
+      "signedDate": "2026-09-15T00:00:00",
+      "submissionDate": "2026-09-15T20:37:10.738",
+      "lastUpdateDate": null,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "cancelled": false,
+      "credit": false,
+      "paymentRelatedAda": null,
+      "protocolNumber": null,
+      "authorEmail": null,
+      "aaht": "1007.F00195.0001",
+      "paymentCommitmentCode": "96ΔΤΟΡΝ3-ΑΑΕ",
+      "organizationVatNumber": "090098321",
+      "greekOrganizationVatNumber": null,
+      "commitmentNo": null,
+      "contractValue": null,
+      "organization": {
+        "key": "50751",
+        "value": "ΔΗΜΟΤΙΚΗ ΕΠΙΧΕΙΡΗΣΗ ΥΔΡΕΥΣΗΣ ΑΠΟΧΕΤΕΥΣΗΣ ΔΗΜΟΥ ΑΛΕΞΑΝΔΡΕΙΑΣ"
+      },
+      "nutsCode": {
+        "key": "EL521",
+        "value": "Ημαθία"
+      },
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": null,
+      "contractType": {
+        "key": "9",
+        "value": "Υπηρεσίες"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "4",
+        "value": "Εκτός Γενικής Κυβέρνησης"
+      },
+      "typeOfContractingAuthority": {
+        "key": "10",
+        "value": "ΝΠΙΔ"
+      },
+      "contractingData": {
+        "unitsOperator": {
+          "key": "83241",
+          "value": "ΟΙΚΟΝΟΜΙΚΗ ΥΠΗΡΕΣΙΑ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Αναπληρωτής Διευθυντής"
+        }
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": null,
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": "62-07-94-009, 62-07-94-010"
+      },
+      "nutsCodes": [],
+      "totalCostWithVAT": 4898.0,
+      "totalCostWithoutVAT": 3950.0,
+      "objectDetails": [
+        {
+          "quantity": 100,
+          "type": {
+            "key": "HUR",
+            "value": "Ώρα"
+          },
+          "costWithoutVAT": 1750,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Κόψιμο χόρτων με μηχανοκίνητα μέσα (τρακτέρ-καταστροφείς, κλπ)",
+          "cpvs": [
+            {
+              "key": "90600000-3",
+              "value": "Υπηρεσίες καθαριότητας και εξυγίανσης σε αστικές ή αγροτικές ζώνες"
+            }
+          ],
+          "addressForDelivery": null,
+          "streetNumber": null,
+          "postalCode": null,
+          "city": "ΑΛΕΞΑΝΔΡΕΙΑ",
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "vatNo": "999990007",
+          "greekVatNo": false,
+          "name": "ΔΙΚΑΙΟΥΧΟΣ ΠΛΗΡΩΜΗΣ",
+          "country": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "invoiceNo": null,
+          "commitmentCode": null,
+          "budgetCode": null
+        },
+        {
+          "quantity": 250,
+          "type": {
+            "key": "HUR",
+            "value": "Ώρα"
+          },
+          "costWithoutVAT": 1500,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Κόψιμο χόρτων με χειροκίνητα μέσα (μεσινέζες, κλπ)",
+          "cpvs": [
+            {
+              "key": "90600000-3",
+              "value": "Υπηρεσίες καθαριότητας και εξυγίανσης σε αστικές ή αγροτικές ζώνες"
+            }
+          ],
+          "addressForDelivery": null,
+          "streetNumber": null,
+          "postalCode": null,
+          "city": "ΑΛΕΞΑΝΔΡΕΙΑ",
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "vatNo": "999990008",
+          "greekVatNo": false,
+          "name": "ΔΙΚΑΙΟΥΧΟΣ ΠΛΗΡΩΜΗΣ",
+          "country": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "invoiceNo": null,
+          "commitmentCode": null,
+          "budgetCode": null
+        },
+        {
+          "quantity": 50,
+          "type": {
+            "key": "HUR",
+            "value": "Ώρα"
+          },
+          "costWithoutVAT": 700,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Φόρτωμα – μεταφορά και εναπόθεση χόρτων σε προεπιλεγμένο χώρο",
+          "cpvs": [
+            {
+              "key": "90600000-3",
+              "value": "Υπηρεσίες καθαριότητας και εξυγίανσης σε αστικές ή αγροτικές ζώνες"
+            }
+          ],
+          "addressForDelivery": null,
+          "streetNumber": null,
+          "postalCode": null,
+          "city": "ΑΛΕΞΑΝΔΡΕΙΑ",
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "vatNo": "999990009",
+          "greekVatNo": false,
+          "name": "ΔΙΚΑΙΟΥΧΟΣ ΠΛΗΡΩΜΗΣ",
+          "country": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "invoiceNo": null,
+          "commitmentCode": null,
+          "budgetCode": null
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "requestRefNo": null,
+      "auctionRefNo": null,
+      "contractRefNo": "26SYMV019525673"
+    }
+  ]
+}

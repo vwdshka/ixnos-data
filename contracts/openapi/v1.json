@@ -1,0 +1,1803 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "ixnos-data API",
+    "description": "Search Greek public procurement and spending data from ΚΗΜΔΗΣ and Διαύγεια.\n\n**Rate limits.** Without a key, 120 requests a minute per IP address. With an API key\n(free: sign in on the website, then create one on the alerts page), send it as the\n`X-Api-Key` header for 600 requests a minute. Over the limit: HTTP 429.\n\n**Bulk data.** Daily exports of every record (CSV and JSON Lines) are at /exports/.\n\n**Sources and licence.** ΚΗΜΔΗΣ and Διαύγεια open data, both CC BY 4.0: credit the\nsources when you reuse the data.",
+    "license": {
+      "name": "AGPL-3.0",
+      "url": "https://www.gnu.org/licenses/agpl-3.0.html"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/search": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Search records",
+        "description": "Full-text search in Greek (accents and case ignored, words stemmed), typo-tolerant, Greeklish-aware, with filters. An ΑΔΑΜ or ΑΔΑ finds that record; a nine-digit VAT number finds records of that organisation or contractor.",
+        "operationId": "SearchItems",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "cpv",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nuts",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "organisation",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minAmount",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "maxAmount",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "signal",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchItemsResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/items/{sourceId}": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Get one record by its ΑΔΑΜ (ΚΗΜΔΗΣ) or ΑΔΑ (Διαύγεια)",
+        "operationId": "GetItem",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/organisations/{id}": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Get a contracting authority with its activity and recent records",
+        "operationId": "GetOrganisation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/cpv": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Find CPV codes by label (Greek or English) or code prefix",
+        "description": "For picking a trade: at most 12 codes, broad categories first. Needs at least 2 characters.",
+        "operationId": "FindCpv",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CodeLabel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/status": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "When the data was last refreshed from each source",
+        "operationId": "GetStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/metrics": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Public metrics: records per source, ingestion lag and runs, and usage totals",
+        "operationId": "GetMetrics",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicMetrics"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sitemap": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "How many pages of record identifiers the sitemap has",
+        "operationId": "GetSitemapIndex",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SitemapIndex"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sitemap/items/{page}": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Record identifiers for search engines, 50000 per page",
+        "operationId": "GetSitemapItems",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SitemapEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/sitemap/organisations": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Identifiers of organisations that have records",
+        "operationId": "GetSitemapOrganisations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SitemapEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Email a one-time sign-in link (always accepted; never reveals whether an account exists)",
+        "operationId": "RequestLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/verify": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Exchange a sign-in link's token for a session token",
+        "operationId": "VerifyLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/me/logout": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "End this session",
+        "operationId": "Logout",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/me": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "The signed-in account and its saved searches",
+        "operationId": "GetAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountView"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Delete the account and everything linked to it",
+        "operationId": "DeleteAccount",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/v1/me/digest": {
+      "put": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Choose how often alerts are emailed: daily, weekly or paused",
+        "operationId": "SetDigest",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DigestSettingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/saved-searches": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Save a search for daily alerts",
+        "operationId": "SaveSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedSearchView"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/saved-searches/{id}": {
+      "delete": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Stop alerts for a saved search",
+        "operationId": "DeleteSavedSearch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/me/api-keys": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "The account's active API keys (without the keys themselves)",
+        "operationId": "ListApiKeys",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApiKeyView"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Create an API key; the key is returned once",
+        "operationId": "CreateApiKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedApiKey"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/api-keys/{id}": {
+      "delete": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Revoke an API key",
+        "operationId": "RevokeApiKey",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountView": {
+        "required": [
+          "email",
+          "locale",
+          "savedSearches",
+          "digestFrequency"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "savedSearches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SavedSearchView"
+            }
+          },
+          "digestFrequency": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiKeyRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ApiKeyView": {
+        "required": [
+          "id",
+          "name",
+          "prefix",
+          "permitsPerMinute",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "prefix": {
+            "type": "string"
+          },
+          "permitsPerMinute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CodeLabel": {
+        "required": [
+          "code",
+          "labelEl",
+          "labelEn"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "labelEl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "labelEn": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ContractorSpend": {
+        "required": [
+          "name",
+          "awards",
+          "amountEur",
+          "paidEur"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "awards": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amountEur": {
+            "type": "number",
+            "format": "double"
+          },
+          "paidEur": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CreatedApiKey": {
+        "required": [
+          "apiKey",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "apiKey": {
+            "$ref": "#/components/schemas/ApiKeyView"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "DataStatus": {
+        "required": [
+          "updatedAt",
+          "sources"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceStatus"
+            }
+          }
+        }
+      },
+      "DigestSettingsRequest": {
+        "required": [
+          "frequency"
+        ],
+        "type": "object",
+        "properties": {
+          "frequency": {
+            "type": "string"
+          }
+        }
+      },
+      "DominantSupplier": {
+        "required": [
+          "name",
+          "share",
+          "awards",
+          "totalAwards"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "share": {
+            "type": "number",
+            "format": "double"
+          },
+          "awards": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAwards": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "IngestionRunSummary": {
+        "required": [
+          "source",
+          "mode",
+          "status",
+          "startedAt",
+          "durationSeconds",
+          "fetched",
+          "inserted",
+          "updated"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationSeconds": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "fetched": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inserted": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updated": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ItemContractorView": {
+        "required": [
+          "name",
+          "role",
+          "amountEur",
+          "countryCode"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "amountEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "countryCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ItemDetail": {
+        "required": [
+          "sourceId",
+          "source",
+          "kind",
+          "title",
+          "description",
+          "organisation",
+          "amountEur",
+          "amountWithVatEur",
+          "publishedAt",
+          "signedOn",
+          "deadlineAt",
+          "startsOn",
+          "endsOn",
+          "cancelled",
+          "cancelledOn",
+          "cpv",
+          "nuts",
+          "contractors",
+          "links",
+          "documentUrl",
+          "supersededBy"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organisation": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OrganisationRef"
+              }
+            ]
+          },
+          "amountEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "amountWithVatEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "signedOn": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "deadlineAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "startsOn": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "endsOn": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "cancelled": {
+            "type": "boolean"
+          },
+          "cancelledOn": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "cpv": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CodeLabel"
+            }
+          },
+          "nuts": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CodeLabel"
+              }
+            ]
+          },
+          "contractors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemContractorView"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemLinkView"
+            }
+          },
+          "documentUrl": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uri"
+          },
+          "supersededBy": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "procedure": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "offersReceived": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "signals": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "amountImplausible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ItemLinkView": {
+        "required": [
+          "relation",
+          "source",
+          "sourceId",
+          "kind",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ItemSummary": {
+        "required": [
+          "sourceId",
+          "source",
+          "kind",
+          "title",
+          "organisation",
+          "amountEur",
+          "publishedAt",
+          "deadlineAt",
+          "nutsCode",
+          "cpvCodes",
+          "cancelled",
+          "amountWithVatEur"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "organisation": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OrganisationRef"
+              }
+            ]
+          },
+          "amountEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deadlineAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "nutsCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cpvCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cancelled": {
+            "type": "boolean"
+          },
+          "amountWithVatEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "signals": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "amountImplausible": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": [
+          "email",
+          "locale"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "locale": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "OrganisationDetail": {
+        "required": [
+          "id",
+          "nameEl",
+          "nameEn",
+          "type",
+          "taxId",
+          "parent",
+          "website",
+          "itemCounts",
+          "awardedLast12MonthsEur",
+          "paidLast12MonthsEur",
+          "awardedByYear",
+          "topContractors",
+          "recentItems"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "nameEl": {
+            "type": "string"
+          },
+          "nameEn": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "taxId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "parent": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OrganisationRef"
+              }
+            ]
+          },
+          "website": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uri"
+          },
+          "itemCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "awardedLast12MonthsEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "paidLast12MonthsEur": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "awardedByYear": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/YearSpend"
+            }
+          },
+          "topContractors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractorSpend"
+            }
+          },
+          "recentItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemSummary"
+            }
+          },
+          "dominantSupplier": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DominantSupplier"
+              }
+            ]
+          }
+        }
+      },
+      "OrganisationRef": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PublicMetrics": {
+        "required": [
+          "sources",
+          "recentRuns",
+          "users",
+          "savedSearches",
+          "alertsLast7Days",
+          "apiKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceMetrics"
+            }
+          },
+          "recentRuns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngestionRunSummary"
+            }
+          },
+          "users": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "savedSearches": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alertsLast7Days": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "apiKeys": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SavedSearchRequest": {
+        "required": [
+          "name",
+          "q",
+          "kind",
+          "cpv",
+          "nuts",
+          "minAmount",
+          "maxAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "q": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cpv": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "nuts": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "minAmount": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "maxAmount": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "SavedSearchView": {
+        "required": [
+          "id",
+          "name",
+          "q",
+          "kind",
+          "cpv",
+          "nuts",
+          "minAmount",
+          "maxAmount",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "q": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cpv": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "nuts": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "minAmount": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "maxAmount": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SearchItemsResult": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "mode",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemSummary"
+            }
+          },
+          "totalCapped": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "SessionResult": {
+        "required": [
+          "sessionToken",
+          "expiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "sessionToken": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SitemapEntry": {
+        "required": [
+          "id",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SitemapIndex": {
+        "required": [
+          "itemPages"
+        ],
+        "type": "object",
+        "properties": {
+          "itemPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SourceMetrics": {
+        "required": [
+          "source",
+          "records",
+          "updatedAt",
+          "lagMinutes",
+          "runsSucceeded",
+          "runsTotal"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "records": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "updatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "lagMinutes": {
+            "type": [
+              "null",
+              "number"
+            ],
+            "format": "double"
+          },
+          "runsSucceeded": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "runsTotal": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SourceStatus": {
+        "required": [
+          "source",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "VerifyRequest": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "YearSpend": {
+        "required": [
+          "year",
+          "awards",
+          "amountEur",
+          "approvedEur",
+          "paidEur"
+        ],
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "awards": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amountEur": {
+            "type": "number",
+            "format": "double"
+          },
+          "approvedEur": {
+            "type": "number",
+            "format": "double"
+          },
+          "paidEur": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Public"
+    }
+  ]
+}

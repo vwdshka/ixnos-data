@@ -1,0 +1,29 @@
+# HTTPS certificates are issued and renewed automatically for IXNOS_DATA_DOMAIN.
+{$IXNOS_DATA_DOMAIN} {
+	encode zstd gzip
+
+	# Nothing here accepts more than a small JSON body; refuse anything larger early.
+	request_body {
+		max_size 64KB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	# Daily bulk exports, written by the pipeline (see infra/crontab).
+	handle_path /exports/* {
+		root * /srv/exports
+		file_server browse
+	}
+
+	# The public API, its documentation and health endpoints; everything else is the web app.
+	@api path /v1/* /health /health/* /docs /openapi/*
+	reverse_proxy @api api:8080
+	reverse_proxy web:3000
+}

@@ -1,0 +1,405 @@
+@import "tailwindcss";
+
+/* The receipt: paper slips on a counter, printed in one ink. Secondary text is never grey;
+   hierarchy comes from weight, size and rules. The accent is the till roll's end-of-roll stripe,
+   kept for actions, focus and open deadlines. */
+:root {
+  --counter: #e6e6e1;
+  --paper: #fbfbf8;
+  --ink: #141414;
+  --accent: #b8154f;
+  --accent-ink: #ffffff;
+  --slip-shadow: rgb(20 20 20 / 0.1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --counter: #0b0b0b;
+    --paper: #1a1a19;
+    --ink: #ecebe4;
+    --accent: #ff6f9e;
+    --accent-ink: #141414;
+    --slip-shadow: rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --counter: #0b0b0b;
+  --paper: #1a1a19;
+  --ink: #ecebe4;
+  --accent: #ff6f9e;
+  --accent-ink: #141414;
+  --slip-shadow: rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-counter: var(--counter);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-commissioner), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  background: var(--counter);
+}
+
+/* The page scrolls like a till roll: ink on the counter, with the magenta end-of-roll stripe
+   printed at the bottom of the track. Browsers without scrollbar pseudo-elements (Firefox)
+   get the two colours. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-color: var(--ink) var(--counter);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, var(--counter) calc(100% - 28px), var(--accent) calc(100% - 28px) calc(100% - 24px), var(--counter) calc(100% - 24px));
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 3px solid var(--counter);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--counter);
+}
+
+body {
+  background: var(--counter);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  caret-color: var(--accent);
+  font-feature-settings: "kern";
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+h1,
+h2 {
+  text-wrap: balance;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* A paper slip with a torn, serrated bottom edge. The mask would clip a box-shadow, so the
+   shadow lives on the wrapper as a drop-shadow filter. */
+.slip-shadow {
+  filter: drop-shadow(0 1px 0 var(--slip-shadow)) drop-shadow(0 6px 12px var(--slip-shadow));
+}
+
+.slip {
+  --tooth: 7px;
+  background: var(--paper);
+  padding-bottom: calc(var(--tooth) + 1.25rem);
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth))
+    100%;
+}
+
+/* Tear-off perforation and the double rule under a total. */
+.tear {
+  border-top: 1px dashed var(--ink);
+}
+
+.total-rule {
+  border-bottom: 3px double var(--ink);
+}
+
+/* Label ............ value, as on a till receipt. */
+.leader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5ch;
+}
+
+.leader::after {
+  content: "";
+  order: 1;
+  flex: 1;
+  min-width: 2ch;
+  border-bottom: 1px dotted var(--ink);
+  transform: translateY(-0.25em);
+}
+
+.leader > :last-child {
+  order: 2;
+  text-align: right;
+}
+
+/* The search feed. Focus prints a double rule under the text, like the line under a total,
+   instead of the accent outline; it draws in from the left. The / key hint steps aside. */
+.search-feed::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  border-bottom: 6px double var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+/* The site-wide accent outline is unlayered, so it would win over a utility class. */
+.search-feed input:focus-visible {
+  outline: none;
+}
+
+.search-feed:focus-within::after {
+  transform: scaleX(1);
+}
+
+.search-feed:focus-within .search-feed-key {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-feed::after {
+    transition: none;
+  }
+}
+
+/* Shown only when loading takes a while. */
+.late {
+  animation: late 0s 4s both;
+}
+
+@keyframes late {
+  from {
+    visibility: hidden;
+  }
+}
+
+/* The signature moment: new slips feed out of the printer. */
+@keyframes feed {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-8px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+.print-in {
+  animation: feed 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print-in {
+    animation: none;
+  }
+}
+
+/* Theme toggle: both icons are rendered; the active theme decides which shows, so the server
+   markup never depends on the visitor's preference. */
+.theme-icon-dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-icon-dark {
+  display: block;
+}
+
+:root[data-theme="dark"] .theme-icon-light {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon-dark {
+    display: block;
+  }
+
+  :root:not([data-theme="light"]) .theme-icon-light {
+    display: none;
+  }
+}
+
+/* On paper: the slip in black on white whatever the theme, without the site's chrome, the search
+   form or buttons. Links print their address so a printed record still leads to its source. */
+@media print {
+  :root,
+  :root[data-theme="dark"],
+  :root:not([data-theme="light"]) {
+    --counter: #ffffff;
+    --paper: #ffffff;
+    --ink: #000000;
+    --accent: #000000;
+    --slip-shadow: transparent;
+    color-scheme: light;
+  }
+
+  body > header,
+  body > footer,
+  form[role="search"],
+  nav,
+  button {
+    display: none !important;
+  }
+
+  .slip-shadow {
+    filter: none;
+  }
+
+  .print-in {
+    animation: none;
+  }
+
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+}
+
+/* The printer while search results load: a slot, and a slip feeding out of it again and again,
+   with the print head's cursor blinking. With reduced motion the slip simply sits there. */
+.printer-slot {
+  height: 14px;
+  background: var(--ink);
+  border-radius: 4px 4px 2px 2px;
+  box-shadow: inset 0 -5px 0 -3px var(--counter);
+}
+
+.printer-paper {
+  margin-top: -3px;
+}
+
+.printer-feed {
+  animation: printer-feed 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes printer-feed {
+  0% {
+    transform: translateY(-100%);
+  }
+  70%,
+  100% {
+    transform: none;
+  }
+}
+
+.printer-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  margin-left: 0.4ch;
+  vertical-align: -0.15em;
+  background: var(--ink);
+  animation: printer-cursor 1s steps(1) infinite;
+}
+
+@keyframes printer-cursor {
+  50% {
+    visibility: hidden;
+  }
+}
+
+.printed-line {
+  display: block;
+  height: 0.4em;
+  background: repeating-linear-gradient(to right, var(--ink) 0 0.8ch, transparent 0.8ch 1ch);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .printer-feed,
+  .printer-cursor {
+    animation: none;
+  }
+}
+
+/* The strip of paper that falls away when a slip is torn off to share it. */
+.slip-shadow {
+  position: relative;
+}
+
+.torn-strip {
+  --tooth: 7px;
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 22px;
+  background: var(--paper);
+  mask:
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth)) 100%;
+  pointer-events: none;
+}
+
+/* Dot-matrix cells for the spending strip: one printed block per character cell. Paid is
+   hatched so the two lines differ without a second colour. */
+.dot-cells {
+  height: 0.8em;
+  background: repeating-linear-gradient(to right, var(--ink) 0 0.8ch, transparent 0.8ch 1ch);
+  print-color-adjust: exact;
+}
+
+.dot-cells-hatched {
+  background: repeating-linear-gradient(45deg, var(--ink) 0 1.2px, transparent 1.2px 3.5px);
+  mask: repeating-linear-gradient(to right, #000 0 0.8ch, #0000 0.8ch 1ch);
+}
+
+@media (forced-colors: active) {
+  .dot-cells {
+    forced-color-adjust: none;
+    background: repeating-linear-gradient(to right, CanvasText 0 0.8ch, transparent 0.8ch 1ch);
+  }
+}
+
+/* Taped receipts: a strip of translucent tape across each join, laid down a little crooked. */
+.tape-roll > li + li::before,
+.tape-join::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -26px;
+  left: 50%;
+  width: 112px;
+  height: 40px;
+  transform: translateX(-50%) rotate(-3deg);
+  background:
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--ink) 24%, transparent) 0 1px, transparent 1px 4px),
+    color-mix(in srgb, var(--counter) 55%, transparent);
+  clip-path: polygon(3% 0, 97% 0, 100% 18%, 96% 36%, 100% 54%, 96% 72%, 100% 90%, 97% 100%, 3% 100%, 0 82%, 4% 64%, 0 46%, 4% 28%, 0 10%);
+}
+
+.tape-roll > li:nth-child(odd) + li::before {
+  transform: translateX(-46%) rotate(2.5deg);
+}
+
+.tape-join {
+  margin-top: 12px;
+}

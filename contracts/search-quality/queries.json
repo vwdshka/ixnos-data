@@ -1,0 +1,587 @@
+{
+  "description": "Search quality test set: realistic queries ixnos-data must answer well, with relevance criteria instead of hand-picked results so it stays valid as data grows. A record is relevant to a query when it satisfies every criterion given (any_cpv_prefix: one of its CPV codes starts with one of these; title_any: its normalised title contains one of these normalised stems; organisation_any: its organisation name contains one of these; nuts_prefix: its NUTS code starts with this; reference: exact ΑΔΑΜ/ΑΔΑ; organisation_vat: exact VAT). Metrics: precision@10 and recall@10 against the relevant set, per category. Criteria checked against six months of real results (September 2026). Scored with `python -m ixnos_data_pipeline.search_quality --api <url>`, which fails when a category's precision@10 drops below its threshold.",
+  "categories": {
+    "trade": "What a small business sells, in plain Greek",
+    "greeklish": "The same needs typed in Latin script",
+    "typo": "Misspellings, missing or wrong accents, wrong final letters",
+    "authority": "Who is buying: authority names, uppercase, abbreviations",
+    "region": "A trade within a region (NUTS filter)",
+    "filtered": "Search plus structured filters (amount, CPV, type)",
+    "mixed": "Latin-script product names and brands inside Greek searches",
+    "identifier": "Exact identifiers: ΑΔΑΜ, ΑΔΑ, VAT number"
+  },
+  "queries": [
+    {
+      "id": "trade-01",
+      "category": "trade",
+      "query": "προμήθεια φαρμάκων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "336"
+        ]
+      }
+    },
+    {
+      "id": "trade-02",
+      "category": "trade",
+      "query": "ιατρικά αναλώσιμα",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "3314"
+        ]
+      }
+    },
+    {
+      "id": "trade-03",
+      "category": "trade",
+      "query": "υπηρεσίες καθαρισμού",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "9091"
+        ]
+      }
+    },
+    {
+      "id": "trade-04",
+      "category": "trade",
+      "query": "αποφράξεις αποχέτευσης",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "9047",
+          "9046"
+        ]
+      }
+    },
+    {
+      "id": "trade-05",
+      "category": "trade",
+      "query": "catering εκδήλωσης",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "5552",
+          "5532",
+          "5531"
+        ]
+      }
+    },
+    {
+      "id": "trade-06",
+      "category": "trade",
+      "query": "πυροσβεστήρες",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "35111",
+          "504132",
+          "45343",
+          "249512"
+        ]
+      }
+    },
+    {
+      "id": "trade-07",
+      "category": "trade",
+      "query": "ηλεκτρολογικές εργασίες",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "4531",
+          "71314",
+          "5071"
+        ]
+      }
+    },
+    {
+      "id": "trade-08",
+      "category": "trade",
+      "query": "κοπή χόρτων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "7731",
+          "7734"
+        ]
+      }
+    },
+    {
+      "id": "trade-09",
+      "category": "trade",
+      "query": "πετρέλαιο θέρμανσης",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "09135"
+        ]
+      }
+    },
+    {
+      "id": "trade-10",
+      "category": "trade",
+      "query": "καύσιμα οχημάτων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "0913",
+          "0921"
+        ]
+      }
+    },
+    {
+      "id": "trade-11",
+      "category": "trade",
+      "query": "ασφαλτόστρωση δρόμων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "4523"
+        ]
+      }
+    },
+    {
+      "id": "trade-12",
+      "category": "trade",
+      "query": "συντήρηση κλιματιστικών",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "5073",
+          "4533",
+          "5071"
+        ]
+      }
+    },
+    {
+      "id": "trade-13",
+      "category": "trade",
+      "query": "γραφική ύλη",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "3019"
+        ]
+      }
+    },
+    {
+      "id": "trade-14",
+      "category": "trade",
+      "query": "απεντόμωση μυοκτονία",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "9092"
+        ]
+      }
+    },
+    {
+      "id": "trade-15",
+      "category": "trade",
+      "query": "υπηρεσίες φύλαξης",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "7971"
+        ]
+      }
+    },
+    {
+      "id": "trade-16",
+      "category": "trade",
+      "query": "μεταφορά μαθητών",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "6013",
+          "6014"
+        ]
+      }
+    },
+    {
+      "id": "trade-17",
+      "category": "trade",
+      "query": "γάλα εργαζομένων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "1551"
+        ]
+      }
+    },
+    {
+      "id": "trade-18",
+      "category": "trade",
+      "query": "ανταλλακτικά οχημάτων",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "3433",
+          "3435",
+          "343",
+          "34913"
+        ]
+      }
+    },
+    {
+      "id": "trade-19",
+      "category": "trade",
+      "query": "νομικές υπηρεσίες",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "791"
+        ]
+      }
+    },
+    {
+      "id": "trade-20",
+      "category": "trade",
+      "query": "μελέτη οδοποιίας",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "7132",
+          "7131",
+          "71335"
+        ]
+      }
+    },
+    {
+      "id": "greeklish-01",
+      "category": "greeklish",
+      "query": "promitheia farmakon",
+      "same_as": "trade-01"
+    },
+    {
+      "id": "greeklish-02",
+      "category": "greeklish",
+      "query": "katharismos",
+      "relevant_if": {
+        "title_any": [
+          "καθαρισμ"
+        ]
+      }
+    },
+    {
+      "id": "greeklish-03",
+      "category": "greeklish",
+      "query": "petrelaio thermansis",
+      "same_as": "trade-09"
+    },
+    {
+      "id": "greeklish-04",
+      "category": "greeklish",
+      "query": "asfaltostrosi",
+      "same_as": "trade-11"
+    },
+    {
+      "id": "greeklish-05",
+      "category": "greeklish",
+      "query": "ilektrologikes ergasies",
+      "same_as": "trade-07"
+    },
+    {
+      "id": "greeklish-06",
+      "category": "greeklish",
+      "query": "xortokopi",
+      "relevant_if": {
+        "title_any": [
+          "χορτοκοπ",
+          "κοπη χορτ"
+        ]
+      }
+    },
+    {
+      "id": "greeklish-07",
+      "category": "greeklish",
+      "query": "fylaksi ktirion",
+      "same_as": "trade-15"
+    },
+    {
+      "id": "greeklish-08",
+      "category": "greeklish",
+      "query": "metafora mathiton",
+      "same_as": "trade-16"
+    },
+    {
+      "id": "typo-01",
+      "category": "typo",
+      "query": "προμηθια φαρμακων",
+      "same_as": "trade-01"
+    },
+    {
+      "id": "typo-02",
+      "category": "typo",
+      "query": "υπηρεσιες καθαρησμου",
+      "same_as": "trade-03"
+    },
+    {
+      "id": "typo-03",
+      "category": "typo",
+      "query": "κλιματηστικών",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "4251",
+          "397172",
+          "5073",
+          "4533",
+          "5071"
+        ]
+      }
+    },
+    {
+      "id": "typo-04",
+      "category": "typo",
+      "query": "ΑΣΦΑΛΤΟΣΤΡΩΣΗ",
+      "same_as": "trade-11"
+    },
+    {
+      "id": "typo-05",
+      "category": "typo",
+      "query": "πυροσβεστηρας",
+      "same_as": "trade-06"
+    },
+    {
+      "id": "typo-06",
+      "category": "typo",
+      "query": "απεντομοση",
+      "same_as": "trade-14"
+    },
+    {
+      "id": "authority-01",
+      "category": "authority",
+      "query": "Δήμος Ιωαννιτών",
+      "relevant_if": {
+        "organisation_any": [
+          "ΔΗΜΟΣ ΙΩΑΝΝΙΤΩΝ"
+        ]
+      }
+    },
+    {
+      "id": "authority-02",
+      "category": "authority",
+      "query": "δημος αθηναιων",
+      "relevant_if": {
+        "organisation_any": [
+          "ΔΗΜΟΣ ΑΘΗΝΑΙΩΝ"
+        ]
+      }
+    },
+    {
+      "id": "authority-03",
+      "category": "authority",
+      "query": "Περιφέρεια Κρήτης",
+      "relevant_if": {
+        "organisation_any": [
+          "ΠΕΡΙΦΕΡΕΙΑ ΚΡΗΤΗΣ"
+        ]
+      }
+    },
+    {
+      "id": "authority-04",
+      "category": "authority",
+      "query": "ΕΥΔΑΠ",
+      "relevant_if": {
+        "organisation_any": [
+          "ΕΥΔΑΠ",
+          "ΕΤΑΙΡΕΙΑ ΥΔΡΕΥΣΕΩΣ ΚΑΙ ΑΠΟΧΕΤΕΥΣΕΩΣ ΠΡΩΤΕΥΟΥΣΗΣ"
+        ]
+      }
+    },
+    {
+      "id": "authority-05",
+      "category": "authority",
+      "query": "νοσοκομείο Χατζηκώστα",
+      "relevant_if": {
+        "organisation_any": [
+          "ΧΑΤΖΗΚΩΣΤΑ"
+        ]
+      }
+    },
+    {
+      "id": "authority-06",
+      "category": "authority",
+      "query": "Πανεπιστήμιο Ιωαννίνων",
+      "relevant_if": {
+        "organisation_any": [
+          "ΠΑΝΕΠΙΣΤΗΜΙΟ ΙΩΑΝΝΙΝΩΝ"
+        ]
+      }
+    },
+    {
+      "id": "authority-07",
+      "category": "authority",
+      "query": "ΔΕΥΑ Λάρισας",
+      "relevant_if": {
+        "organisation_any": [
+          "ΔΕΥΑ ΛΑΡΙΣΑΣ",
+          "ΔΗΜΟΤΙΚΗ ΕΠΙΧΕΙΡΗΣΗ ΥΔΡΕΥΣΗΣ ΑΠΟΧΕΤΕΥΣΗΣ ΛΑΡΙΣΑΣ"
+        ]
+      }
+    },
+    {
+      "id": "authority-08",
+      "category": "authority",
+      "query": "ΕΚΑΒ",
+      "relevant_if": {
+        "organisation_any": [
+          "ΕΚΑΒ",
+          "ΕΘΝΙΚΟ ΚΕΝΤΡΟ ΑΜΕΣΗΣ ΒΟΗΘΕΙΑΣ"
+        ]
+      }
+    },
+    {
+      "id": "authority-09",
+      "category": "authority",
+      "query": "dimos thessalonikis",
+      "relevant_if": {
+        "organisation_any": [
+          "ΔΗΜΟΣ ΘΕΣΣΑΛΟΝΙΚΗΣ"
+        ]
+      }
+    },
+    {
+      "id": "region-01",
+      "category": "region",
+      "query": "καθαρισμός",
+      "filters": {
+        "nuts": "EL54"
+      },
+      "relevant_if": {
+        "title_any": [
+          "καθαρισμ"
+        ],
+        "nuts_prefix": "EL54"
+      }
+    },
+    {
+      "id": "region-02",
+      "category": "region",
+      "query": "φάρμακα",
+      "filters": {
+        "nuts": "EL43"
+      },
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "336"
+        ],
+        "nuts_prefix": "EL43"
+      }
+    },
+    {
+      "id": "region-03",
+      "category": "region",
+      "query": "ασφαλτόστρωση",
+      "filters": {
+        "nuts": "EL52"
+      },
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "4523"
+        ],
+        "nuts_prefix": "EL52"
+      }
+    },
+    {
+      "id": "filtered-01",
+      "category": "filtered",
+      "query": "καθαρισμός",
+      "filters": {
+        "min_amount_eur": 50000
+      },
+      "relevant_if": {
+        "title_any": [
+          "καθαρισμ"
+        ],
+        "min_amount_eur": 50000
+      }
+    },
+    {
+      "id": "filtered-02",
+      "category": "filtered",
+      "query": "",
+      "filters": {
+        "cpv": "3314"
+      },
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "3314"
+        ]
+      }
+    },
+    {
+      "id": "filtered-03",
+      "category": "filtered",
+      "query": "φάρμακα",
+      "filters": {
+        "kind": "notice"
+      },
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "336"
+        ],
+        "kind": "notice"
+      }
+    },
+    {
+      "id": "mixed-01",
+      "category": "mixed",
+      "query": "λαμπτήρες LED",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "315"
+        ]
+      }
+    },
+    {
+      "id": "mixed-02",
+      "category": "mixed",
+      "query": "laptop",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "30213"
+        ]
+      }
+    },
+    {
+      "id": "mixed-03",
+      "category": "mixed",
+      "query": "server",
+      "relevant_if": {
+        "any_cpv_prefix": [
+          "4882",
+          "48218",
+          "72416",
+          "7226"
+        ]
+      }
+    },
+    {
+      "id": "mixed-04",
+      "category": "mixed",
+      "query": "3D εκτυπωτής",
+      "relevant_if": {
+        "title_any": [
+          "3d"
+        ]
+      }
+    },
+    {
+      "id": "identifier-01",
+      "category": "identifier",
+      "query": "26PROC019787840",
+      "relevant_if": {
+        "reference": "26PROC019787840"
+      }
+    },
+    {
+      "id": "identifier-02",
+      "category": "identifier",
+      "query": "Ρ7Υ646906Η-Φ6Λ",
+      "relevant_if": {
+        "reference": "Ρ7Υ646906Η-Φ6Λ"
+      }
+    },
+    {
+      "id": "identifier-03",
+      "category": "identifier",
+      "query": "090114939",
+      "relevant_if": {
+        "organisation_vat": "090114939"
+      }
+    }
+  ],
+  "thresholds": {
+    "trade": 0.85,
+    "greeklish": 0.75,
+    "typo": 0.8,
+    "authority": 0.85,
+    "region": 0.85,
+    "filtered": 0.9,
+    "mixed": 0.8,
+    "identifier": 0.95
+  }
+}

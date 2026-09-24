@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IxnosData.Client/IxnosData.Client.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IxnosData.Client.Tests/IxnosData.Client.Tests.csproj" />
+  </Folder>
+</Solution>

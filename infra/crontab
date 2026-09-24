@@ -1,0 +1,28 @@
+# Host crontab for the production server (install with: crontab infra/crontab).
+# Runs from the repo checkout at /opt/ixnos-data. flock keeps an hourly run from overlapping the
+# nightly one; each run is logged in the ingestion_run table as well as the log file.
+SHELL=/bin/sh
+COMPOSE="docker compose -f /opt/ixnos-data/infra/compose.prod.yaml --env-file /opt/ixnos-data/.env"
+
+# ΚΗΜΔΗΣ: new records every hour, and a nightly re-check of the last few days.
+5 * * * *  flock -n /tmp/ixnos-data-khmdhs.lock $COMPOSE run --rm pipeline khmdhs hourly  >> /var/log/ixnos-data/pipeline.log 2>&1
+30 2 * * * flock -w 3600 /tmp/ixnos-data-khmdhs.lock $COMPOSE run --rm pipeline khmdhs nightly >> /var/log/ixnos-data/pipeline.log 2>&1
+
+# Διαύγεια: spending decisions and awards, on the same pattern (offset so the two sources
+# don't start together).
+35 * * * * flock -n /tmp/ixnos-data-diavgeia.lock $COMPOSE run --rm pipeline diavgeia hourly  >> /var/log/ixnos-data/pipeline.log 2>&1
+0 3 * * *  flock -w 3600 /tmp/ixnos-data-diavgeia.lock $COMPOSE run --rm pipeline diavgeia nightly >> /var/log/ixnos-data/pipeline.log 2>&1
+
+# The Διαύγεια organisation register (new and renamed authorities), weekly on Sunday.
+15 3 * * 0 $COMPOSE run --rm --entrypoint python pipeline -m ixnos_data_pipeline.sources.diavgeia.organisations >> /var/log/ixnos-data/pipeline.log 2>&1
+
+# Alert digests every morning at 07:00 Greek time (set the server clock to Europe/Athens).
+0 7 * * *  $COMPOSE run --rm notifier >> /var/log/ixnos-data/notifier.log 2>&1
+
+# Bulk exports (CSV, JSON Lines) of every record, served at /exports/.
+30 4 * * * $COMPOSE run --rm --entrypoint python pipeline -m ixnos_data_pipeline.export --out /srv/exports >> /var/log/ixnos-data/pipeline.log 2>&1
+
+# Nightly database dump, kept 14 days on the server and copied off it (infra/scripts/backup.sh),
+# and a restore test into a scratch database on the 1st of each month.
+0 4 * * *  /opt/ixnos-data/infra/scripts/backup.sh >> /var/log/ixnos-data/backup.log 2>&1
+0 5 1 * *  /opt/ixnos-data/infra/scripts/restore-check.sh >> /var/log/ixnos-data/backup.log 2>&1

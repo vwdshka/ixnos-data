@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IxnosData.Api/IxnosData.Api.csproj" />
+    <Project Path="src/IxnosData.Application/IxnosData.Application.csproj" />
+    <Project Path="src/IxnosData.Domain/IxnosData.Domain.csproj" />
+    <Project Path="src/IxnosData.Infrastructure/IxnosData.Infrastructure.csproj" />
+    <Project Path="src/IxnosData.Notifier/IxnosData.Notifier.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IxnosData.Api.IntegrationTests/IxnosData.Api.IntegrationTests.csproj" />
+    <Project Path="tests/IxnosData.Application.Tests/IxnosData.Application.Tests.csproj" />
+    <Project Path="tests/IxnosData.ArchitectureTests/IxnosData.ArchitectureTests.csproj" />
+    <Project Path="tests/IxnosData.Domain.Tests/IxnosData.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

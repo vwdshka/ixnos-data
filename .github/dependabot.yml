@@ -1,0 +1,30 @@
+version: 2
+
+updates:
+  - package-ecosystem: nuget
+    directories: [/backend, /clients/dotnet]
+    schedule: { interval: weekly }
+    groups:
+      nuget: { patterns: ["*"], update-types: [minor, patch] }
+
+  - package-ecosystem: uv
+    directories: [/pipeline, /clients/python]
+    schedule: { interval: weekly }
+    groups:
+      python: { patterns: ["*"], update-types: [minor, patch] }
+
+  - package-ecosystem: npm
+    directory: /web
+    schedule: { interval: weekly }
+    groups:
+      web: { patterns: ["*"], update-types: [minor, patch] }
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      actions: { patterns: ["*"] }
+
+  - package-ecosystem: docker
+    directories: [/backend/src/IxnosData.Api, /web, /pipeline]
+    schedule: { interval: weekly }

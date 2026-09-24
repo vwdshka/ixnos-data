@@ -1,0 +1,390 @@
+{
+  "totalElements": 933,
+  "totalPages": 19,
+  "size": 50,
+  "number": 0,
+  "numberOfElements": 50,
+  "first": true,
+  "last": false,
+  "empty": false,
+  "content": [
+    {
+      "title": "Υπηρεσίες παροχής catering για εκδήλωση του Επιμελητηρίου",
+      "referenceNumber": "26PROC019787797",
+      "signedDate": "2026-09-14T00:00:00",
+      "publishedDate": null,
+      "finalSubmissionDate": "2026-09-18T12:00:00",
+      "submissionDate": "2026-09-15T20:25:08.655",
+      "lastUpdateDate": null,
+      "cancelled": false,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "amendPreviousNotice": false,
+      "amendedNoticeADAM": null,
+      "frameworkAgreementNoticeADAM": null,
+      "protocolNumber": null,
+      "authorEmail": null,
+      "aaht": "1036.F00993.0001",
+      "biddingWebsite": null,
+      "organizationVatNumber": "090013410",
+      "greekOrganizationVatNumber": null,
+      "budget": null,
+      "commitmentNo": null,
+      "relatedNoticeADAM": null,
+      "numberOfSections": 1,
+      "nutsCode": {
+        "key": "EL",
+        "value": "ΕΛΛΑΔΑ"
+      },
+      "nutsCity": "ΠΕΙΡΑΙΑΣ",
+      "nutsPostalCode": "18532",
+      "nutsCountry": {
+        "key": "GR",
+        "value": "Ελλάδα"
+      },
+      "assignedContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "socialContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "centralGovernmentAuthority": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "contractingData": {
+        "unitsOperator": {
+          "key": "74823",
+          "value": "ΔΙΟΙΚΗΤΙΚΗ ΕΠΙΤΡΟΠΗ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Πρόεδρος Διοικητικής Επιτροπής"
+        }
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": "0856",
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": null
+      },
+      "systemicNumbers": [],
+      "approvedRequests": [
+        {
+          "code": "26REQ019787793"
+        }
+      ],
+      "contractingAuthorities": [
+        {
+          "contractingAuthority": {
+            "key": "9",
+            "value": "ΝΠΔΔ"
+          }
+        }
+      ],
+      "nutsCodes": [
+        {
+          "nutsCode": {
+            "key": "EL",
+            "value": "ΕΛΛΑΔΑ"
+          }
+        }
+      ],
+      "organization": {
+        "key": "99220963",
+        "value": "ΒΙΟΤΕΧΝΙΚΟ ΕΠΙΜΕΛ. ΠΕΙΡΑΙΑ"
+      },
+      "typeOfProcedure": {
+        "key": "6",
+        "value": "Απευθείας ανάθεση"
+      },
+      "contractType": {
+        "key": "9",
+        "value": "Υπηρεσίες"
+      },
+      "awardProcedure": null,
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": {
+        "key": "5",
+        "value": "ν.4412/2016 - Βιβλίο Ι – κάτω των ορίων"
+      },
+      "conductingProceedings": {
+        "key": "2",
+        "value": "Μη ηλεκτρονική διαδικασία"
+      },
+      "digitalPlatform": null,
+      "criteriaCode": {
+        "key": "2",
+        "value": "Βάσει τιμής"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "4",
+        "value": "Εκτός Γενικής Κυβέρνησης"
+      },
+      "noticeType": {
+        "key": "4",
+        "value": "Πρόσκληση"
+      },
+      "contractingAuthorityActivity": {
+        "key": "1",
+        "value": "Γενικές δημόσιες υπηρεσίες"
+      },
+      "contractDuration": 1,
+      "contractDurationUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "totalCostWithVAT": 1690.0,
+      "totalCostWithoutVAT": 1362.9,
+      "objectDetails": [
+        {
+          "quantity": 1,
+          "type": {
+            "key": "E48",
+            "value": "Υπηρεσία"
+          },
+          "costWithoutVAT": 1362.9,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Παροχή υπηρεσιών catering στο πλαίσιο της εκδήλωσης «Ψυχική ανθεκτικότητα της γυναίκας επιχειρηματία στις μέρες μας» η οποία θα πραγματοποιηθεί στις 23-9-2026",
+          "cpvs": [
+            {
+              "key": "55520000-1",
+              "value": "Υπηρεσίες τροφοδοσίας"
+            }
+          ],
+          "greenContracts": {
+            "key": "1",
+            "value": "Δεν εμπίπτει στο ΕΣΔ"
+          },
+          "goodServices": null,
+          "budgetCode": null
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "offersValidTime": 1,
+      "offersValidTimeUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "maxNumberOfContractors": null,
+      "optionRight": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "optionRightDescription": null,
+      "abortReason": null,
+      "auctionRefNo": [
+        "26AWRD019825054"
+      ],
+      "amendsNoticeRefNo": []
+    },
+    {
+      "title": "ΠΡΟΣΚΛΗΣΗ ΕΚΔΗΛΩΣΗς ΕΝΔΙΑΦΕΡΟΝΤΟΣ ΓΙΑ ΕΚΤΥΠΩΣΕΙΣ ΕΚΔΗΛΩΣΗΣ ΕΠΙΜΕΛΗΤΗΡΙΟΥ",
+      "referenceNumber": "26PROC019787785",
+      "signedDate": "2026-09-14T00:00:00",
+      "publishedDate": null,
+      "finalSubmissionDate": "2026-09-18T12:00:00",
+      "submissionDate": "2026-09-15T19:56:54.766",
+      "lastUpdateDate": null,
+      "cancelled": false,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "amendPreviousNotice": false,
+      "amendedNoticeADAM": null,
+      "frameworkAgreementNoticeADAM": null,
+      "protocolNumber": null,
+      "authorEmail": null,
+      "aaht": "1036.F00993.0001",
+      "biddingWebsite": null,
+      "organizationVatNumber": "090013410",
+      "greekOrganizationVatNumber": null,
+      "budget": null,
+      "commitmentNo": null,
+      "relatedNoticeADAM": null,
+      "numberOfSections": 1,
+      "nutsCode": {
+        "key": "EL",
+        "value": "ΕΛΛΑΔΑ"
+      },
+      "nutsCity": "ΠΕΙΡΑΙΑΣ",
+      "nutsPostalCode": "18532",
+      "nutsCountry": {
+        "key": "GR",
+        "value": "Ελλάδα"
+      },
+      "assignedContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "socialContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "centralGovernmentAuthority": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "contractingData": {
+        "unitsOperator": {
+          "key": "74823",
+          "value": "ΔΙΟΙΚΗΤΙΚΗ ΕΠΙΤΡΟΠΗ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Πρόεδρος Διοικητικής Επιτροπής"
+        }
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": "0891",
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": null
+      },
+      "systemicNumbers": [],
+      "approvedRequests": [
+        {
+          "code": "26REQ019787781"
+        }
+      ],
+      "contractingAuthorities": [
+        {
+          "contractingAuthority": {
+            "key": "9",
+            "value": "ΝΠΔΔ"
+          }
+        }
+      ],
+      "nutsCodes": [
+        {
+          "nutsCode": {
+            "key": "EL",
+            "value": "ΕΛΛΑΔΑ"
+          }
+        }
+      ],
+      "organization": {
+        "key": "99220963",
+        "value": "ΒΙΟΤΕΧΝΙΚΟ ΕΠΙΜΕΛ. ΠΕΙΡΑΙΑ"
+      },
+      "typeOfProcedure": {
+        "key": "6",
+        "value": "Απευθείας ανάθεση"
+      },
+      "contractType": {
+        "key": "13",
+        "value": "Προμήθειες"
+      },
+      "awardProcedure": null,
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": {
+        "key": "5",
+        "value": "ν.4412/2016 - Βιβλίο Ι – κάτω των ορίων"
+      },
+      "conductingProceedings": {
+        "key": "2",
+        "value": "Μη ηλεκτρονική διαδικασία"
+      },
+      "digitalPlatform": null,
+      "criteriaCode": {
+        "key": "2",
+        "value": "Βάσει τιμής"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "4",
+        "value": "Εκτός Γενικής Κυβέρνησης"
+      },
+      "noticeType": {
+        "key": "4",
+        "value": "Πρόσκληση"
+      },
+      "contractingAuthorityActivity": {
+        "key": "1",
+        "value": "Γενικές δημόσιες υπηρεσίες"
+      },
+      "contractDuration": 1,
+      "contractDurationUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "totalCostWithVAT": 979.6,
+      "totalCostWithoutVAT": 790.0,
+      "objectDetails": [
+        {
+          "quantity": 1,
+          "type": {
+            "key": "C62",
+            "value": "Τεμάχιο"
+          },
+          "costWithoutVAT": 790,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Εκδοση εντύπου/μικρό βιβλιαράκι για την εκδήλωση του Επιμελητηρίου με θέμα «Ψυχική ανθεκτικότητα της γυναίκας επιχειρηματία στις μέρες μας», πάνινη τσάντα αναλόγου μεγέθους, ROLL UP BANNER 80cm ",
+          "cpvs": [
+            {
+              "key": "79800000-2",
+              "value": "Υπηρεσίες εκτύπωσης και συναφείς υπηρεσίες"
+            }
+          ],
+          "greenContracts": {
+            "key": "1",
+            "value": "Δεν εμπίπτει στο ΕΣΔ"
+          },
+          "goodServices": null,
+          "budgetCode": null
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "offersValidTime": 1,
+      "offersValidTimeUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "maxNumberOfContractors": null,
+      "optionRight": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "optionRightDescription": null,
+      "abortReason": null,
+      "auctionRefNo": [
+        "26AWRD019825047"
+      ],
+      "amendsNoticeRefNo": []
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "description": "Shared test cases for Greek text normalisation. The Python pipeline (ixnos_data_pipeline.common.greek_text) normalises text when writing it; the .NET API (IxnosData.Application.Search.GreekText) normalises queries. Both run these cases in their test suites, so a change here must be made in both implementations.",
+  "normalise": [
+    { "input": "Προμήθεια ΦΑΡΜΆΚΩΝ", "expected": "προμηθεια φαρμακων", "why": "lowercase and strip accents" },
+    { "input": "ΟΔΟΣ Ελλάς", "expected": "οδοσ ελλασ", "why": "final sigma folds to σ whichever way it was lowercased" },
+    { "input": "Ϊ ΐ ΰ ϋ", "expected": "ι ι υ υ", "why": "dialytika, with and without tonos" },
+    { "input": "  πολλά \t κενά\n τέλος ", "expected": "πολλα κενα τελοσ", "why": "any whitespace, including no-break space, collapses" },
+    { "input": "ΠPOMHΘEIA", "expected": "προμηθεια", "why": "Latin look-alikes (P, O, M, H, E, I, A) inside a Greek word become Greek" },
+    { "input": "catering 2026", "expected": "catering 2026", "why": "words with no Greek letters keep their Latin letters" },
+    { "input": "Café CRÈME", "expected": "cafe creme", "why": "Latin accents are stripped too" },
+    { "input": "5 µg", "expected": "5 μg", "why": "micro sign becomes Greek mu; g has no Greek look-alike" },
+    { "input": "ΥΠΗΡΕΣΙΕΣ ΚΑΘΑΡΙΟΤΗΤΑΣ (Α' ΦΑΣΗ)", "expected": "υπηρεσιεσ καθαριοτητασ (α' φαση)", "why": "punctuation is kept" },
+    { "input": "3D ΕΚΤΥΠΩΤΗΣ", "expected": "3d εκτυπωτησ", "why": "digits stay" },
+    { "input": "", "expected": "", "why": "empty input" }
+  ],
+  "search_keys": [
+    { "input": "Προμήθεια φαρμάκων", "expected": ["promithia farmakon"], "why": "Greek text has exactly one key" },
+    { "input": "promitheia farmakon", "expected": ["promithia farmakon"], "why": "Greeklish reaches the same key" },
+    { "input": "promh8eia", "expected": ["promithia", "promhthia"], "why": "8 means θ; h may be η or χ, so both keys" },
+    { "input": "χρήματα", "expected": ["hrimata"] },
+    { "input": "xrimata", "expected": ["hrimata", "ksrimata"], "why": "x may be χ or ξ" },
+    { "input": "ηλεκτρικός", "expected": ["ilektrikos"] },
+    { "input": "hlektrikos", "expected": ["ilektrikos", "hlektrikos"] },
+    { "input": "υπηρεσίες καθαριότητας", "expected": ["ipiresies kathariotitas"], "why": "η, ι, υ and ει all become i" },
+    { "input": "ypiresies kathariotitas", "expected": ["ipiresies kathariotitas"] },
+    { "input": "yphresies", "expected": ["ipiresies", "iphresies"], "why": "ph is not treated as φ, because Greeklish writes υπη as yph" },
+    { "input": "ρεύμα", "expected": ["rebma"], "why": "ευ, eu and ev share a key" },
+    { "input": "reuma", "expected": ["rebma"] },
+    { "input": "revma", "expected": ["rebma"] },
+    { "input": "ευρώ", "expected": ["ebro"] },
+    { "input": "euro", "expected": ["ebro"] },
+    { "input": "θάλασσα", "expected": ["thalasa"], "why": "doubled letters collapse" },
+    { "input": "thalassa", "expected": ["thalasa"] },
+    { "input": "8alassa", "expected": ["thalasa"], "why": "8 next to a vowel means θ" },
+    { "input": "αξία", "expected": ["aksia"] },
+    { "input": "a3ia", "expected": ["aksia"], "why": "3 next to a vowel means ξ" },
+    { "input": "3D εκτυπωτής", "expected": ["3d ektipotis"], "why": "3 next to a consonant stays a digit" },
+    { "input": "μπετόν", "expected": ["beton"], "why": "μπ, b and v share a key" },
+    { "input": "mpeton", "expected": ["beton"] },
+    { "input": "Αγγλικά", "expected": ["aglika"], "why": "γγ and gg share a key" },
+    { "input": "agglika", "expected": ["aglika"] },
+    { "input": "ΕΡΓΑΣΙΕΣ ΑΠΟΦΡΑΞΗΣ!!", "expected": ["ergasies apofraksis"], "why": "punctuation separates words" },
+    {
+      "input": "h h h h",
+      "expected": ["i i i i", "i i h i", "i h i i", "i h h i", "h i i i", "h i h i", "h h i i", "h h h i"],
+      "why": "only the first three ambiguous letters expand (8 keys at most); the rest take their first reading; the last expanded letter varies fastest"
+    }
+  ]
+}

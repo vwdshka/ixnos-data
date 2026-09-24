@@ -1,0 +1,219 @@
+{
+  "totalElements": 2458,
+  "totalPages": 50,
+  "size": 50,
+  "number": 0,
+  "numberOfElements": 50,
+  "first": true,
+  "last": false,
+  "empty": false,
+  "content": [
+    {
+      "title": "ΛΟΙΠΕΣ ΑΜΟΙΒΕΣ ΚΑΙ ΕΞΟΔΑ ΟΡΓΑΝΩΤΩΝ - ΜΕΛΕΤΗΤΩΝ (ΕΦΑΡΜΟΓΗ ΑΕΠΟ ΕΡΓΩΝ)",
+      "referenceNumber": "26REQ019787853",
+      "previousRequestReferenceNumber": "26REQ019787851",
+      "signedDate": "2026-07-31",
+      "lastUpdateDate": null,
+      "submissionDate": "2026-09-15T23:59:11.113",
+      "procurementDeliveryDate": "2026-12-31",
+      "cancellationDate": null,
+      "cancelled": false,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "cancellationType": null,
+      "protocolNumber": "ΔΥ",
+      "approvalCommitmentCode": null,
+      "procedureType": null,
+      "approvalADA": null,
+      "authorEmail": null,
+      "greekOrganizationVatNumber": null,
+      "organizationVatNumber": "800106761",
+      "budget": null,
+      "commitmentNo": null,
+      "preApproval": false,
+      "approved": true,
+      "organization": {
+        "key": "51502",
+        "value": "ΔΗΜΟΤΙΚΗ ΕΠΙΧΕΙΡΗΣΗ ΥΔΡΕΥΣΗΣ-ΑΠΟΧΕΤΕΥΣΗΣ (Δ.Ε.Υ.Α.) ΔΙΔΥΜΟΤΕΙΧΟΥ"
+      },
+      "nutsCode": {
+        "key": "EL511",
+        "value": "Έβρος"
+      },
+      "typeOfContractingAuthority": {
+        "key": "10",
+        "value": "ΝΠΙΔ"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "4",
+        "value": "Εκτός Γενικής Κυβέρνησης"
+      },
+      "aaht": "1007.F00334.0001",
+      "contractTypes": [
+        {
+          "contractType": {
+            "key": "9",
+            "value": "Υπηρεσίες"
+          }
+        }
+      ],
+      "contractingData": {
+        "unitsOperator": {
+          "key": "84500",
+          "value": "ΓΡΑΦΕΙΟ ΓΕΝΙΚΟΥ ΔΙΕΥΘΥΝΤΗ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Γενικός Διευθυντής"
+        }
+      },
+      "totalCostWithVAT": 21080.0,
+      "totalCostWithoutVAT": 17000.0,
+      "objectDetails": [
+        {
+          "quantity": 1,
+          "type": {
+            "key": "E48",
+            "value": "Υπηρεσία"
+          },
+          "costWithoutVAT": 17000,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "αροχή υπηρεσιών αρχαιολόγου για επίβλεψη των εργασιών εκσκαφών, ταξινόμηση και τεκμηρίωση ευρημάτων",
+          "cpvs": [
+            {
+              "key": "71351914-3",
+              "value": "Αρχαιολογικές υπηρεσίες"
+            }
+          ]
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "approvalRefNo": [],
+      "noticeRefNo": [
+        "26PROC019787855"
+      ],
+      "contractRefNo": [],
+      "paymentRefNo": [],
+      "auctionRefNo": []
+    },
+    {
+      "title": " Καταβολή μη μισθολογικών παροχών Ειδικού Συνεργάτη – Δημοσιογράφου Δημάρχου μέσω προπληρωμένων καρ",
+      "referenceNumber": "26REQ019787844",
+      "previousRequestReferenceNumber": null,
+      "signedDate": "2026-09-15",
+      "lastUpdateDate": "2026-09-17T00:00:00",
+      "submissionDate": "2026-09-15T23:12:03.486",
+      "procurementDeliveryDate": "2026-09-30",
+      "cancellationDate": null,
+      "cancelled": false,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "cancellationType": null,
+      "protocolNumber": "5332/236/15-9-2026",
+      "approvalCommitmentCode": null,
+      "procedureType": null,
+      "approvalADA": null,
+      "authorEmail": null,
+      "greekOrganizationVatNumber": null,
+      "organizationVatNumber": "998565714",
+      "budget": null,
+      "commitmentNo": null,
+      "preApproval": false,
+      "approved": false,
+      "organization": {
+        "key": "6254",
+        "value": "ΔΗΜΟΣ ΠΡΕΣΠΩΝ"
+      },
+      "nutsCode": {
+        "key": "EL533",
+        "value": "Φλώρινα"
+      },
+      "typeOfContractingAuthority": {
+        "key": "9",
+        "value": "ΝΠΔΔ"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "2",
+        "value": "ΟΤΑ"
+      },
+      "aaht": "1007.E81703.0001",
+      "contractTypes": [
+        {
+          "contractType": {
+            "key": "9",
+            "value": "Υπηρεσίες"
+          }
+        }
+      ],
+      "contractingData": {
+        "unitsOperator": {
+          "key": "81389",
+          "value": "ΓΡΑΦΕΙΟ ΔΗΜΑΡΧΟΥ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Πρόεδρος"
+        }
+      },
+      "totalCostWithVAT": 7209.6,
+      "totalCostWithoutVAT": 7165.55,
+      "objectDetails": [
+        {
+          "quantity": 1,
+          "type": {
+            "key": "E48",
+            "value": "Υπηρεσία"
+          },
+          "costWithoutVAT": 183.55,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Παροχή υπηρεσιών έκδοσης, διαχείρισης και φόρτισής προπληρωμένων καρτών ",
+          "cpvs": [
+            {
+              "key": "30199750-2",
+              "value": "Κουπόνια"
+            }
+          ]
+        },
+        {
+          "quantity": 1,
+          "type": {
+            "key": "E48",
+            "value": "Υπηρεσία"
+          },
+          "costWithoutVAT": 6982,
+          "vat": "0",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Καταβολή μη μισθολογικών παροχών Ειδικού Συνεργάτη – Δημοσιογράφου Δημάρχου μέσω προπληρωμένων καρτών ",
+          "cpvs": [
+            {
+              "key": "30199750-2",
+              "value": "Κουπόνια"
+            }
+          ]
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "approvalRefNo": [
+        "26REQ019805828",
+        "26REQ019805825"
+      ],
+      "noticeRefNo": [],
+      "contractRefNo": [],
+      "paymentRefNo": [],
+      "auctionRefNo": []
+    }
+  ]
+}

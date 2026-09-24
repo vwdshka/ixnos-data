@@ -1,0 +1,4 @@
+# Docker builds use backend/ as their context and never see the repository's .editorconfig, so
+# the one rule a Release build needs is repeated here: generated EF migrations are not analysed.
+[**/Migrations/*.cs]
+generated_code = true

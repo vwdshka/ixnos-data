@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- A one-shot console host, run daily by cron; shares the API's runtime image. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sentry" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IxnosData.Application\IxnosData.Application.csproj" />
+    <ProjectReference Include="..\IxnosData.Infrastructure\IxnosData.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

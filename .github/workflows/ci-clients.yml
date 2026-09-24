@@ -1,0 +1,53 @@
+name: CI clients
+
+on:
+  push:
+    branches: [main]
+    paths: ["clients/**", "contracts/openapi/**", ".github/workflows/ci-clients.yml"]
+  pull_request:
+    paths: ["clients/**", "contracts/openapi/**", ".github/workflows/ci-clients.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Both clients test their models against contracts/openapi/v1.json, so an API change that the
+# clients don't follow fails here.
+jobs:
+  dotnet:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: clients/dotnet
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - run: dotnet test IxnosData.Client.slnx
+      - run: dotnet pack src/IxnosData.Client -c Release -o artifacts
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: clients/python
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: clients/python/uv.lock
+
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy src tests
+      - run: uv run pytest
+      - run: uv build

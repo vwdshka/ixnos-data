@@ -1,0 +1,62 @@
+# Local development: PostgreSQL plus every service, built from source.
+#   docker compose up --build            database, API and web app
+#   docker compose up -d postgres        database only, for running services natively
+#   docker compose run --rm pipeline     one ingestion run (pipeline is behind a profile)
+# Settings come from .env (copy .env.example); the defaults below work without one.
+
+name: ixnos-data
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${IXNOS_DATA_DB_NAME:-ixnos_data}
+      POSTGRES_USER: ${IXNOS_DATA_DB_USER:-ixnos_data}
+      POSTGRES_PASSWORD: ${IXNOS_DATA_DB_PASSWORD:-ixnos_data}
+    ports:
+      - "${IXNOS_DATA_DB_PORT:-5433}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: backend
+      dockerfile: src/IxnosData.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      IXNOS_DATA_Database__MigrateOnStartup: "true"
+      IXNOS_DATA_ConnectionStrings__IxnosData: >-
+        Host=postgres;Database=${IXNOS_DATA_DB_NAME:-ixnos_data};Username=${IXNOS_DATA_DB_USER:-ixnos_data};Password=${IXNOS_DATA_DB_PASSWORD:-ixnos_data}
+    ports:
+      - "${IXNOS_DATA_API_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build: web
+    environment:
+      IXNOS_DATA_API_URL: http://api:8080
+    ports:
+      - "${IXNOS_DATA_WEB_PORT:-3000}:3000"
+    depends_on:
+      - api
+
+  pipeline:
+    build: pipeline
+    profiles: ["ingest"]
+    environment:
+      IXNOS_DATA_DATABASE_URL: >-
+        postgresql+psycopg://${IXNOS_DATA_DB_USER:-ixnos_data}:${IXNOS_DATA_DB_PASSWORD:-ixnos_data}@postgres:5432/${IXNOS_DATA_DB_NAME:-ixnos_data}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:

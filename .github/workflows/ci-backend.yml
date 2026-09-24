@@ -1,0 +1,38 @@
+name: CI backend
+
+on:
+  push:
+    branches: [main]
+    paths: ["backend/**", "contracts/text-normalisation/**", ".github/workflows/ci-backend.yml"]
+  pull_request:
+    paths: ["backend/**", "contracts/text-normalisation/**", ".github/workflows/ci-backend.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+        with:
+          global-json-file: backend/global.json
+
+      - run: dotnet restore IxnosData.slnx
+      - run: dotnet format IxnosData.slnx --verify-no-changes --no-restore
+      - run: dotnet build IxnosData.slnx --configuration Release --no-restore
+      - run: dotnet test IxnosData.slnx --configuration Release --no-build
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - run: docker build --file backend/src/IxnosData.Api/Dockerfile backend

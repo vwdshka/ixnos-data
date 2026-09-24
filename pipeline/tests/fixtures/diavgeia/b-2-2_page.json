@@ -1,0 +1,106 @@
+{
+  "decisions": [
+    {
+      "protocolNumber": "1234",
+      "subject": "ΟΡΙΣΤΙΚΟΠΟΙΗΣΗ ΠΛΗΡΩΜΗΣ ΠΡΟΜΗΘΕΙΑΣ",
+      "issueDate": 1789430400000,
+      "organizationId": "99220974",
+      "signerIds": [
+        "100098083"
+      ],
+      "unitIds": [
+        "74837"
+      ],
+      "decisionTypeId": "Β.2.2",
+      "thematicCategoryIds": [
+        "20"
+      ],
+      "extraFieldValues": {
+        "org": {
+          "afm": "099785242",
+          "afmType": "EL",
+          "afmCountry": "EL",
+          "name": "Ε.Κ.Ε.Τ.Α."
+        },
+        "skipVatReason": null,
+        "sponsor": [
+          {
+            "sponsorAFMName": {
+              "afm": "999990002",
+              "afmType": "EL",
+              "afmCountry": "EL",
+              "name": "ΔΙΚΑΙΟΥΧΟΣ 2"
+            },
+            "expenseAmount": {
+              "amount": 2976.0,
+              "currency": "EUR"
+            }
+          }
+        ],
+        "relatedEkgrisiDapanis": null,
+        "relatedDecisions": null,
+        "documentType": "ΠΡΑΞΗ"
+      },
+      "privateData": false,
+      "ada": "ΨΗ5Θ469ΗΡ8-6ΝΠ",
+      "publishTimestamp": 1789499350759,
+      "submissionTimestamp": 1789499350759,
+      "versionId": "793db60c-60c9-44d1-97b5-c0b041e9b8e7",
+      "status": "PUBLISHED",
+      "url": "https://diavgeia.gov.gr/luminapi/api/decisions/ΨΗ5Θ469ΗΡ8-6ΝΠ",
+      "documentUrl": "https://diavgeia.gov.gr/doc/ΨΗ5Θ469ΗΡ8-6ΝΠ",
+      "documentChecksum": null,
+      "attachments": [],
+      "warnings": null,
+      "correctedVersionId": null
+    },
+    {
+      "protocolNumber": "1234",
+      "subject": "ΟΡΙΣΤΙΚΟΠΟΙΗΣΗ ΠΛΗΡΩΜΗΣ",
+      "issueDate": 1789430400000,
+      "organizationId": "6051",
+      "signerIds": [
+        "100012868"
+      ],
+      "unitIds": [
+        "100093449"
+      ],
+      "decisionTypeId": "Β.2.2",
+      "thematicCategoryIds": [
+        "24"
+      ],
+      "extraFieldValues": {
+        "org": {
+          "afm": "997573323",
+          "afmType": "EL",
+          "name": "ΔΗΜΟΣ ΒΑΡΗΣ ΒΟΥΛΑΣ ΒΟΥΛΙΑΓΜΕΝΗΣ"
+        },
+        "skipVatReason": "SKIP_VAT_REASON_1",
+        "sponsor": null,
+        "relatedEkgrisiDapanis": null,
+        "relatedDecisions": null,
+        "documentType": "ΠΡΑΞΗ"
+      },
+      "privateData": false,
+      "ada": "Ψ6ΖΔΩΨΖ-7Ν3",
+      "publishTimestamp": 1789496917401,
+      "submissionTimestamp": 1789496917401,
+      "versionId": "ea57fcda-db88-433b-af16-47f08f883aa8",
+      "status": "PUBLISHED",
+      "url": "https://diavgeia.gov.gr/luminapi/api/decisions/Ψ6ΖΔΩΨΖ-7Ν3",
+      "documentUrl": "https://diavgeia.gov.gr/doc/Ψ6ΖΔΩΨΖ-7Ν3",
+      "documentChecksum": null,
+      "attachments": [],
+      "warnings": null,
+      "correctedVersionId": null
+    }
+  ],
+  "info": {
+    "query": "submissionTimestamp:[DT(2026-09-15T00:00:00+03:00) TO DT(2026-09-16T00:00:00+03:00)] AND issueDate:[DT(2026-03-26T23:07:29+02:00) TO DT(2026-09-22T23:07:29+03:00)] AND decisionTypeUid:\"Β.2.2\" AND status:\"Αναρτημένη\"",
+    "page": 0,
+    "size": 500,
+    "actualSize": 2,
+    "total": 2,
+    "order": "recent"
+  }
+}

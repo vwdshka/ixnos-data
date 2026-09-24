@@ -1,0 +1,106 @@
+# Production: images from GHCR behind Caddy (automatic HTTPS). Run from the repo root on the
+# server: docker compose -f infra/compose.prod.yaml --env-file .env up -d
+# Scheduling (ingestion, backups) lives in infra/crontab on the host. See infra/README.md.
+
+name: ixnos-data
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${IXNOS_DATA_DB_NAME:-ixnos_data}
+      POSTGRES_USER: ${IXNOS_DATA_DB_USER:-ixnos_data}
+      POSTGRES_PASSWORD: ${IXNOS_DATA_DB_PASSWORD:?set IXNOS_DATA_DB_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    image: ${IXNOS_DATA_IMAGE_PREFIX:-ghcr.io/vwdshka/ixnos-data}-api:${IXNOS_DATA_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      IXNOS_DATA_ConnectionStrings__IxnosData: >-
+        Host=postgres;Database=${IXNOS_DATA_DB_NAME:-ixnos_data};Username=${IXNOS_DATA_DB_USER:-ixnos_data};Password=${IXNOS_DATA_DB_PASSWORD}
+      IXNOS_DATA_Database__MigrateOnStartup: "true"
+      IXNOS_DATA_Web__BaseUrl: https://${IXNOS_DATA_DOMAIN}
+      IXNOS_DATA_Sentry__Dsn: ${IXNOS_DATA_SENTRY_DSN_API:-}
+      IXNOS_DATA_Email__From: ${IXNOS_DATA_EMAIL_FROM:-ixnos-data <no-reply@${IXNOS_DATA_DOMAIN}>}
+      IXNOS_DATA_Email__Smtp__Host: ${IXNOS_DATA_SMTP_HOST:-}
+      IXNOS_DATA_Email__Smtp__Port: ${IXNOS_DATA_SMTP_PORT:-587}
+      IXNOS_DATA_Email__Smtp__Username: ${IXNOS_DATA_SMTP_USERNAME:-}
+      IXNOS_DATA_Email__Smtp__Password: ${IXNOS_DATA_SMTP_PASSWORD:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    image: ${IXNOS_DATA_IMAGE_PREFIX:-ghcr.io/vwdshka/ixnos-data}-web:${IXNOS_DATA_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      IXNOS_DATA_API_URL: http://api:8080
+      IXNOS_DATA_SITE_URL: https://${IXNOS_DATA_DOMAIN}
+      IXNOS_DATA_SENTRY_DSN: ${IXNOS_DATA_SENTRY_DSN_WEB:-}
+    depends_on:
+      - api
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      IXNOS_DATA_DOMAIN: ${IXNOS_DATA_DOMAIN:?set IXNOS_DATA_DOMAIN in .env}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - exports:/srv/exports:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+      - api
+
+  # The daily alert digest: the API image with the notifier's entry point, run by cron.
+  notifier:
+    image: ${IXNOS_DATA_IMAGE_PREFIX:-ghcr.io/vwdshka/ixnos-data}-api:${IXNOS_DATA_TAG:-latest}
+    profiles: ["jobs"]
+    entrypoint: ["dotnet", "IxnosData.Notifier.dll"]
+    environment:
+      IXNOS_DATA_ConnectionStrings__IxnosData: >-
+        Host=postgres;Database=${IXNOS_DATA_DB_NAME:-ixnos_data};Username=${IXNOS_DATA_DB_USER:-ixnos_data};Password=${IXNOS_DATA_DB_PASSWORD}
+      IXNOS_DATA_Web__BaseUrl: https://${IXNOS_DATA_DOMAIN}
+      IXNOS_DATA_Sentry__Dsn: ${IXNOS_DATA_SENTRY_DSN_API:-}
+      IXNOS_DATA_Email__From: ${IXNOS_DATA_EMAIL_FROM:-ixnos-data <no-reply@${IXNOS_DATA_DOMAIN}>}
+      IXNOS_DATA_Email__Smtp__Host: ${IXNOS_DATA_SMTP_HOST:-}
+      IXNOS_DATA_Email__Smtp__Port: ${IXNOS_DATA_SMTP_PORT:-587}
+      IXNOS_DATA_Email__Smtp__Username: ${IXNOS_DATA_SMTP_USERNAME:-}
+      IXNOS_DATA_Email__Smtp__Password: ${IXNOS_DATA_SMTP_PASSWORD:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # One-off runs only, started by the host crontab: docker compose run --rm pipeline khmdhs hourly
+  pipeline:
+    image: ${IXNOS_DATA_IMAGE_PREFIX:-ghcr.io/vwdshka/ixnos-data}-pipeline:${IXNOS_DATA_TAG:-latest}
+    profiles: ["ingest"]
+    environment:
+      IXNOS_DATA_DATABASE_URL: >-
+        postgresql+psycopg://${IXNOS_DATA_DB_USER:-ixnos_data}:${IXNOS_DATA_DB_PASSWORD}@postgres:5432/${IXNOS_DATA_DB_NAME:-ixnos_data}
+    volumes:
+      - exports:/srv/exports
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  exports:
+  caddy-data:
+  caddy-config:

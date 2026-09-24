@@ -1,0 +1,36 @@
+name: Data issue
+description: A record is wrong, missing or badly labelled.
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ixnos-data shows records as ΚΗΜΔΗΣ and Διαύγεια publish them. Tell us where ixnos-data differs from the source, or where the source itself looks wrong.
+        **To ask for your personal data to be removed**, do not use this form; see the privacy page.
+  - type: input
+    id: identifier
+    attributes:
+      label: Record identifier
+      description: ΑΔΑΜ (e.g. 26PROC019787840) or ΑΔΑ (e.g. ΛΓ2ΣΩΗΥ-Ν4Ψ), or the ixnos-data URL.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options:
+        - A value differs from the source (amount, date, organisation, contractor)
+        - The record is missing from ixnos-data
+        - The record is in the wrong category or region
+        - A link between records is wrong or missing
+        - The source itself seems wrong
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What ixnos-data shows, what the source shows (link), and what you expected.
+    validations:
+      required: true

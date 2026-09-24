@@ -1,0 +1,410 @@
+{
+  "totalElements": 1133,
+  "totalPages": 23,
+  "size": 50,
+  "number": 0,
+  "numberOfElements": 50,
+  "first": true,
+  "last": false,
+  "empty": false,
+  "content": [
+    {
+      "title": "Σύμβαση 414/29-6-26_ΕΝΔΟΣΚΟΠΙΚΟΙ ΣΑΚΚΟΙ-ΣΥΣΤΗΜΑ ΦΙΛΤΡΟΥ ΑΠΑΓΩΓΗΣ -ΦΙΛΤΡΟ ΠΑΡΟΧΗΣ",
+      "referenceNumber": "26SYMV019787852",
+      "prevReferenceNo": null,
+      "noticeReferenceNumber": null,
+      "submissionDate": "2026-09-15T23:58:55.146",
+      "lastUpdateDate": null,
+      "contractSignedDate": "2026-08-05",
+      "startDate": "2026-08-05",
+      "noEndDate": false,
+      "endDate": "2026-10-30",
+      "cancelled": false,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "decisionRelatedAda": null,
+      "contractNumber": "414/29-6-26",
+      "authorEmail": null,
+      "organizationVatNumber": "999332744",
+      "greekOrganizationVatNumber": null,
+      "commitmentNo": null,
+      "diavgeiaADA": null,
+      "aaht": "1015.E00170.0001",
+      "budget": null,
+      "contractBudget": 9250,
+      "bidsSubmitted": null,
+      "maxBidsSubmitted": 2,
+      "numberOfSections": 1,
+      "assignedContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "socialContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "centralGovernmentAuthority": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "nutsCodes": [
+        {
+          "nutsCode": {
+            "key": "EL303",
+            "value": "Κεντρικός Τομέας Αθηνών"
+          }
+        }
+      ],
+      "approvedRequestsList": [],
+      "organization": {
+        "key": "99221870",
+        "value": "ΓΕΝΙΚΟ ΝΟΣΟΚΟΜΕΙΟ «ΕΛΕΝΑ ΒΕΝΙΖΕΛΟΥ-ΑΛΕΞΑΝΔΡΑ» ΥΠΟΚΑΤΑΣΤΗΜΑ ΕΛΕΝΑ ΒΕΝΙΖΕΛΟΥ"
+      },
+      "procedureType": {
+        "key": "6",
+        "value": "Απευθείας ανάθεση"
+      },
+      "awardProcedure": null,
+      "nutsCode": {
+        "key": "EL303",
+        "value": "Κεντρικός Τομέας Αθηνών"
+      },
+      "nutsCity": "Αθήνα",
+      "nutsPostalCode": "11521",
+      "nutsCountry": {
+        "key": "GR",
+        "value": "Ελλάδα"
+      },
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": {
+        "key": "5",
+        "value": "ν.4412/2016 - Βιβλίο Ι – κάτω των ορίων"
+      },
+      "contractType": {
+        "key": "13",
+        "value": "Προμήθειες"
+      },
+      "assignCriteria": {
+        "key": "13",
+        "value": "Βάσει τιμής"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "1",
+        "value": "Κεντρική Κυβέρνηση"
+      },
+      "typeOfContractingAuthority": {
+        "key": "9",
+        "value": "ΝΠΔΔ"
+      },
+      "contractingAuthorityActivity": {
+        "key": "6",
+        "value": "Υγεία"
+      },
+      "contractDuration": 3,
+      "contractDurationUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "contractRelatedADA": {
+        "number1": null,
+        "number2": null,
+        "number3": "Ψ2ΤΗ46904Ε-ΡΡΓ"
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": null,
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": "32302030000101"
+      },
+      "contractingDataDetails": {
+        "unitsOperator": {
+          "key": "76378",
+          "value": "ΓΕΝΙΚΟ ΝΟΣΟΚΟΜΕΙΟ \\\"ΕΛΕΝΑ ΒΕΝΙΖΕΛΟΥ-ΑΛΕΞΑΝΔΡΑ\\\" ΕΛΕΝΑ ΒΕΝΙΖΕΛΟΥ - ΔΙΟΙΚΗΤΗΣ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Διοικητής"
+        },
+        "contractingMembersDataList": [
+          {
+            "country": {
+              "key": "GR",
+              "value": "Ελλάδα"
+            },
+            "vatNumber": "999990004",
+            "greekVatNumber": false,
+            "name": "ΑΝΑΔΟΧΟΣ 1"
+          }
+        ]
+      },
+      "totalCostWithVAT": 11470.0,
+      "totalCostWithoutVAT": 9250.0,
+      "objectDetailsList": [
+        {
+          "quantity": 550,
+          "type": {
+            "key": "C62",
+            "value": "Τεμάχιο"
+          },
+          "costWithoutVAT": 9250,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Σύμβαση 414/29-6-26_ΕΝΔΟΣΚΟΠΙΚΟΙ ΣΑΚΚΟΙ-ΣΥΣΤΗΜΑ ΦΙΛΤΡΟΥ ΑΠΑΓΩΓΗΣ -ΦΙΛΤΡΟ ΠΑΡΟΧΗΣ",
+          "cpvs": [
+            {
+              "key": "33162200-5",
+              "value": "Εργαλεία χειρουργείου"
+            }
+          ],
+          "greenContracts": {
+            "key": "1",
+            "value": "Δεν εμπίπτει στο ΕΣΔ"
+          },
+          "goodServices": null,
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "addressForDelivery": null,
+          "postalCode": null,
+          "city": "ΑΘΗΝΑ",
+          "streetNumber": null,
+          "budgetCode": null,
+          "requestRefNo": "26AWRD019575562"
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "requestRefNo": null,
+      "nextRefNo": null,
+      "nextExtended": null,
+      "nextModified": null,
+      "auctionRefNo": "26AWRD019575562",
+      "paymentRefNo": []
+    },
+    {
+      "title": "Προμήθεια εξοπλισμού πέντε (5) διαγνωστικών εργαλειοθηκών",
+      "referenceNumber": "26SYMV019787842",
+      "prevReferenceNo": null,
+      "noticeReferenceNumber": null,
+      "submissionDate": "2026-09-15T22:58:43.231",
+      "lastUpdateDate": null,
+      "contractSignedDate": "2026-09-11",
+      "startDate": "2026-09-11",
+      "noEndDate": false,
+      "endDate": "2026-11-10",
+      "cancelled": false,
+      "cancellationDate": null,
+      "cancellationType": null,
+      "cancellationReason": null,
+      "cancellationADA": null,
+      "decisionRelatedAda": null,
+      "contractNumber": "658",
+      "authorEmail": null,
+      "organizationVatNumber": "998245478",
+      "greekOrganizationVatNumber": null,
+      "commitmentNo": null,
+      "diavgeiaADA": null,
+      "aaht": "9000.F01421.0001",
+      "budget": null,
+      "contractBudget": 48387.1,
+      "bidsSubmitted": null,
+      "maxBidsSubmitted": 1,
+      "numberOfSections": 1,
+      "assignedContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "socialContract": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "centralGovernmentAuthority": {
+        "key": "2",
+        "value": "Όχι"
+      },
+      "nutsCodes": [
+        {
+          "nutsCode": {
+            "key": "CY000",
+            "value": "Κύπρος"
+          }
+        },
+        {
+          "nutsCode": {
+            "key": "ES620",
+            "value": "Murcia"
+          }
+        },
+        {
+          "nutsCode": {
+            "key": "FRJ1",
+            "value": "Languedoc-Roussillon"
+          }
+        },
+        {
+          "nutsCode": {
+            "key": "ITC4C",
+            "value": "Milano"
+          }
+        }
+      ],
+      "approvedRequestsList": [],
+      "organization": {
+        "key": "100018432",
+        "value": "ΔΙΑΒΑΛΚΑΝΙΚΟ ΚΕΝΤΡΟ ΠΕΡΙΒΑΛΛΟΝΤΟΣ"
+      },
+      "procedureType": {
+        "key": "1",
+        "value": "Ανοιχτή διαδικασία"
+      },
+      "awardProcedure": null,
+      "nutsCode": {
+        "key": "EL52",
+        "value": "Κεντρική Μακεδονία"
+      },
+      "nutsCity": "ΛΑΓΚΑΔΑΣ",
+      "nutsPostalCode": "57200",
+      "nutsCountry": {
+        "key": "GR",
+        "value": "Ελλάδα"
+      },
+      "centralizedMarkets": [
+        {
+          "centralizedMarket": {
+            "key": "8",
+            "value": "Δεν χρησιμοποιείται"
+          }
+        }
+      ],
+      "legalContext": {
+        "key": "5",
+        "value": "ν.4412/2016 - Βιβλίο Ι – κάτω των ορίων"
+      },
+      "contractType": {
+        "key": "13",
+        "value": "Προμήθειες"
+      },
+      "assignCriteria": {
+        "key": "13",
+        "value": "Βάσει τιμής"
+      },
+      "classificationOfPublicLawOrganization": {
+        "key": "4",
+        "value": "Εκτός Γενικής Κυβέρνησης"
+      },
+      "typeOfContractingAuthority": {
+        "key": "10",
+        "value": "ΝΠΙΔ"
+      },
+      "contractingAuthorityActivity": {
+        "key": "4",
+        "value": "Περιβάλλον"
+      },
+      "contractDuration": 2,
+      "contractDurationUnitOfMeasure": {
+        "key": "3",
+        "value": "Μήνες"
+      },
+      "contractRelatedADA": {
+        "number1": null,
+        "number2": null,
+        "number3": "Δ/Α"
+      },
+      "fundingDetails": {
+        "publicFundingRef": null,
+        "publicFundingRefNum": null,
+        "publicFundingRefOps": null,
+        "cofundProgramRef": null,
+        "selfFundProgramRef": "Δ/Α",
+        "espaFundProgramRef": null,
+        "regularBudgetFundedProgramRef": null
+      },
+      "contractingDataDetails": {
+        "unitsOperator": {
+          "key": "100018906",
+          "value": "YΠΗΡΕΣΙΑ ΤΕΧΝΙΚΗΣ ΚΑΙ ΔΙΟΙΚΗΤΙΚΗΣ ΜΕΡΙΜΝΑΣ"
+        },
+        "signers": {
+          "key": "100000000",
+          "value": "ΟΝΟΜΑ ΕΠΩΝΥΜΟ - Διευθυντής"
+        },
+        "contractingMembersDataList": [
+          {
+            "country": {
+              "key": "GR",
+              "value": "Ελλάδα"
+            },
+            "vatNumber": "999990005",
+            "greekVatNumber": false,
+            "name": "ΑΝΑΔΟΧΟΣ 1"
+          }
+        ]
+      },
+      "totalCostWithVAT": 59892.0,
+      "totalCostWithoutVAT": 48300.0,
+      "objectDetailsList": [
+        {
+          "quantity": 5,
+          "type": {
+            "key": "C62",
+            "value": "Τεμάχιο"
+          },
+          "costWithoutVAT": 48300,
+          "vat": "24",
+          "currency": {
+            "key": "EUR",
+            "value": "Ευρώ"
+          },
+          "shortDescription": "Προμήθεια πέντε (5) Διαγνωστικών Εργαλειοθηκών (Diagnostic Toolboxes), στο πλαίσιο του έργου «NEMESIS – Soil Health Living Lab Network for Combating Desertification in the Mediterranean» του Προγράμματος Horizon Europe (HORIZON-MISS-2024-SOIL-01-01), Grant Agreement No. 101219087.",
+          "cpvs": [
+            {
+              "key": "38410000-2",
+              "value": "Όργανα μέτρησης"
+            }
+          ],
+          "greenContracts": {
+            "key": "1",
+            "value": "Δεν εμπίπτει στο ΕΣΔ"
+          },
+          "goodServices": null,
+          "cityOfConstruction": null,
+          "countryOfDelivery": {
+            "key": "GR",
+            "value": "Ελλάδα"
+          },
+          "addressForDelivery": null,
+          "postalCode": null,
+          "city": "ΠΑΡΑΡΤΗΜΑ",
+          "streetNumber": null,
+          "budgetCode": null,
+          "requestRefNo": "26AWRD019787841"
+        }
+      ],
+      "additionalContractTypes": null,
+      "mixedContract": false,
+      "requestRefNo": null,
+      "nextRefNo": null,
+      "nextExtended": null,
+      "nextModified": null,
+      "auctionRefNo": "26AWRD019787841",
+      "paymentRefNo": []
+    }
+  ]
+}

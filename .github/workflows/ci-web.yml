@@ -1,0 +1,76 @@
+name: CI web
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "backend/**", "compose.yaml", ".github/workflows/ci-web.yml"]
+  pull_request:
+    paths: ["web/**", "backend/**", "compose.yaml", ".github/workflows/ci-web.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      # Reads the pnpm version from "packageManager" in web/package.json.
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: web/package.json
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - run: docker build web
+
+  # The whole stack from compose.yaml (the API migrates the database on start), seeded with
+  # tests/e2e/seed.sql, then Playwright against the web app.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - run: docker compose up -d --build --wait postgres api web
+      - name: Wait for the API and database
+        run: |
+          for i in $(seq 60); do curl -fs http://localhost:8080/health/ready && exit 0; sleep 2; done
+          docker compose logs api; exit 1
+      - run: docker compose exec -T postgres psql -U ixnos_data -d ixnos_data -v ON_ERROR_STOP=1 < web/tests/e2e/seed.sql
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          package_json_file: web/package.json
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: web
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: web
+      - run: pnpm e2e
+        working-directory: web
+      - if: failure()
+        run: docker compose logs api web
