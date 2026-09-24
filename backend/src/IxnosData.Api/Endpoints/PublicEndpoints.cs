@@ -4,8 +4,8 @@ using IxnosData.Application.Organisations;
 using IxnosData.Application.Search;
 using IxnosData.Application.Sitemap;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace IxnosData.Api.Endpoints;
 
