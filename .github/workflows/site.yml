@@ -1,0 +1,128 @@
+name: Site
+
+# The static edition on GitHub Pages (https://vwdshka.github.io/ixnos-data/), refreshed every
+# three hours: restore the working database, fetch what ΚΗΜΔΗΣ and Διαύγεια published since, save
+# the database again, then build the site and its data files and publish them.
+#
+# The working database is kept between runs as an encrypted file on the release "site-state". It
+# holds contractors' VAT numbers (needed to recognise the same contractor in new records), which
+# must never be public, so it is encrypted with the repository secret IXNOS_DATA_STATE_KEY. The
+# first copy comes from scripts/make-site-state.sh.
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "hourly re-reads yesterday and today; nightly re-reads the last week"
+        type: choice
+        options: [nightly, hourly]
+        default: nightly
+
+permissions:
+  contents: write # the site-state release
+  pages: write
+  id-token: write
+
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ixnos_data
+          POSTGRES_PASSWORD: ixnos_data
+          POSTGRES_DB: ixnos_data
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U ixnos_data" --health-interval 5s --health-timeout 5s --health-retries 30
+    env:
+      IXNOS_DATA_DATABASE_URL: postgresql+psycopg://ixnos_data:ixnos_data@localhost:5432/ixnos_data
+      IXNOS_DATA_STATE_KEY: ${{ secrets.IXNOS_DATA_STATE_KEY }}
+      GH_TOKEN: ${{ github.token }}
+      POSTGRES: ${{ job.services.postgres.id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Restore the working database
+        run: |
+          if [ -z "$IXNOS_DATA_STATE_KEY" ]; then
+            echo "::error::Set the repository secret IXNOS_DATA_STATE_KEY (see the README, 'The public site')."
+            exit 1
+          fi
+          gh release download site-state --pattern site-state.dump.enc --dir "$RUNNER_TEMP"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:IXNOS_DATA_STATE_KEY \
+            -in "$RUNNER_TEMP/site-state.dump.enc" -out "$RUNNER_TEMP/state.dump"
+          docker exec -i "$POSTGRES" pg_restore -U ixnos_data -d ixnos_data --no-owner --no-privileges --exit-on-error \
+            < "$RUNNER_TEMP/state.dump"
+          rm "$RUNNER_TEMP/state.dump"
+          # Limit: the schema is the one the state was made with. After a new EF Core migration,
+          # make a new state (scripts/make-site-state.sh) from a migrated local database.
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - run: uv sync --locked
+        working-directory: pipeline
+
+      # A source that fails leaves its data as it was; the run is logged and shows on /status, and
+      # the site is still published with what the other source brought.
+      - name: Fetch new records
+        working-directory: pipeline
+        run: |
+          mode="${{ inputs.mode }}"
+          if [ -z "$mode" ]; then
+            mode=$([ "$(date -u +%H)" = "03" ] && echo nightly || echo hourly)
+          fi
+          echo "mode: $mode"
+          uv run python -m ixnos_data_pipeline khmdhs "$mode" || echo "::warning::ΚΗΜΔΗΣ $mode run failed"
+          uv run python -m ixnos_data_pipeline diavgeia "$mode" || echo "::warning::Διαύγεια $mode run failed"
+          if [ "$mode" = nightly ]; then
+            uv run python -m ixnos_data_pipeline.sources.diavgeia.organisations \
+              || echo "::warning::organisation register refresh failed"
+          fi
+
+      - name: Save the working database
+        run: |
+          docker exec "$POSTGRES" pg_dump -U ixnos_data -d ixnos_data -Fc --no-owner --no-privileges \
+            | openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:IXNOS_DATA_STATE_KEY \
+                -out "$RUNNER_TEMP/site-state.dump.enc"
+          gh release upload site-state "$RUNNER_TEMP/site-state.dump.enc" --clobber
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: web/package.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - name: Build the site
+        working-directory: web
+        run: |
+          pnpm install --frozen-lockfile
+          BASE_PATH="/${{ github.event.repository.name }}" pnpm build:static
+
+      - name: Write the site's data files
+        working-directory: pipeline
+        run: |
+          uv run python -m ixnos_data_pipeline.static_site --out ../web/out/data \
+            --site-url "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: web/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

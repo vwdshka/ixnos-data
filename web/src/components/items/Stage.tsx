@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { recordHref } from "@/lib/links";
 import type { ItemDetail } from "@/lib/api/client";
 
 // The procurement chain a ΚΗΜΔΗΣ record sits on. Διαύγεια decisions (commitments, spending
@@ -80,7 +81,7 @@ export function Chain({ kind, links }: { kind: string; links: RecordLink[] }) {
               {isCurrent ? (
                 <span className="font-semibold">{item("thisRecord")}</span>
               ) : link?.kind ? (
-                <Link href={`/items/${encodeURIComponent(link.sourceId)}`} className="underline">
+                <Link href={recordHref(link.sourceId)} className="underline">
                   {link.title ?? link.sourceId}
                 </Link>
               ) : link ? (

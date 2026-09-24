@@ -52,3 +52,9 @@ export const serverTape = () => EMPTY;
 export function tapeHref(ids: readonly string[]): { pathname: "/tape"; query: Record<string, string> } {
   return { pathname: "/tape", query: ids.length > 0 ? { ids: ids.join(",") } : {} };
 }
+
+/** The record identifiers in a tape link's ?ids=, at most TAPE_MAX. */
+export function readTapeIds(value: string | string[] | null | undefined): string[] {
+  const raw = Array.isArray(value) ? value.join(",") : (value ?? "");
+  return [...new Set(raw.split(",").map((id) => id.trim()).filter(Boolean))].slice(0, TAPE_MAX);
+}
