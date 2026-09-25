@@ -46,11 +46,12 @@ jobs:
       IXNOS_DATA_DATABASE_URL: postgresql+psycopg://ixnos_data:ixnos_data@localhost:5432/ixnos_data
       IXNOS_DATA_STATE_KEY: ${{ secrets.IXNOS_DATA_STATE_KEY }}
       GH_TOKEN: ${{ github.token }}
-      POSTGRES: ${{ job.services.postgres.id }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Restore the working database
+        env:
+          POSTGRES: ${{ job.services.postgres.id }}
         run: |
           if [ -z "$IXNOS_DATA_STATE_KEY" ]; then
             echo "::error::Set the repository secret IXNOS_DATA_STATE_KEY (see the README, 'The public site')."
@@ -87,6 +88,8 @@ jobs:
           fi
 
       - name: Save the working database
+        env:
+          POSTGRES: ${{ job.services.postgres.id }}
         run: |
           docker exec "$POSTGRES" pg_dump -U ixnos_data -d ixnos_data -Fc --no-owner --no-privileges \
             | openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:IXNOS_DATA_STATE_KEY \

@@ -33,3 +33,4 @@ Thumbs.db
 # Local data: raw API caches and probe output, and database snapshots
 .data/
 *.dump
+*.dump.enc
