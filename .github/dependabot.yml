@@ -28,3 +28,7 @@ updates:
   - package-ecosystem: docker
     directories: [/backend/src/IxnosData.Api, /web, /pipeline]
     schedule: { interval: weekly }
+    ignore:
+      # Node's odd-numbered releases are short-lived and drop corepack; stay on the LTS line.
+      - dependency-name: node
+        update-types: [version-update:semver-major]

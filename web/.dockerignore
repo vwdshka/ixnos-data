@@ -3,3 +3,6 @@ node_modules
 .env*
 !.env.example
 tests
+
+# Tests run in CI, not in the image (some read shared cases from outside web/).
+**/*.test.ts
