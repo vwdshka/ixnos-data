@@ -1,5 +1,7 @@
 # ixnos-data
 
+[![CodeQL](https://github.com/vwdshka/ixnos-data/actions/workflows/codeql.yml/badge.svg)](https://github.com/vwdshka/ixnos-data/actions/workflows/codeql.yml)
+
 > Πού πάνε τα λεφτά; Where does the money go?
 
 **ixnos-data** makes Greek public procurement and spending data searchable, alertable and
