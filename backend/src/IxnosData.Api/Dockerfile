@@ -15,7 +15,7 @@ COPY src/ src/
 # --entrypoint "dotnet IxnosData.Notifier.dll".
 RUN dotnet publish src/IxnosData.Api/IxnosData.Api.csproj -c Release --no-restore -o /app  && dotnet publish src/IxnosData.Notifier/IxnosData.Notifier.csproj -c Release --no-restore -o /app
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
+FROM mcr.microsoft.com/dotnet/aspnet:11.0
 WORKDIR /app
 COPY --from=build /app .
 USER $APP_UID
